@@ -1,0 +1,48 @@
+type Query{
+	myAwards(UID: String!): [ myAwardsPayload ]
+	tokens(limit: Int, offset: Int) : [ tokensPayload ]
+	results:[resultsPayload]
+}
+
+type Mutation{
+	vote(UID: String!, inviter: String, tokenID: [ID]) : votePayload
+	login(UID: String!, inviter: String): loginPayload
+  share(URL:String!) : sharePayload
+}
+
+type tokensPayload{
+  tokenID:ID
+  tokenName:String
+  tokenIntroduction:String
+  tokenAvatar:String
+}
+
+type sharePayload{
+  timestamp: String!
+  nonceStr: String!
+  signature: String!
+}
+
+type resultsPayload{
+  tokenID:ID
+  tokenName:String
+  tokenIntroduction:String
+  tokenAvatar:String
+  percentage:Float
+}
+
+type myAwardsPayload{
+  type: String
+  awards:Int
+}
+
+type votePayload{
+  voteSuccess:Boolean
+  voteMessage:String
+  tokens: Int
+}
+
+type loginPayload{
+  loginSuccess:Boolean
+  loginMessage:String
+}

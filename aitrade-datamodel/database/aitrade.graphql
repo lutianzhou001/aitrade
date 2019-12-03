@@ -1,0 +1,24 @@
+type User {
+	UID: String! @unique
+	phoneNumber: String!
+    nickName: String!
+    address: String!
+}
+
+type Token {
+	tokenID: ID! @unique
+    tokenName: String!
+	isCopycat:String!
+}
+
+type follow {
+    follower: String!
+	leader: String!
+}
+
+type transactions {
+	from : String!
+	to: String!
+	value: String!
+	type: String!
+}
