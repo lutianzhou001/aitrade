@@ -1,0 +1,50 @@
+type Query {
+  myProfile: myProfilePayload!
+}
+
+type Mutation {
+	changeintroduction(introduction:String): changeintroductionPayload
+  changenickName(nickName:String): changenickNamePayload
+	login(phoneNumber: String!, sms: String!): loginPayload
+  getMessage: getMessagePayload
+  subcribe(UID:String!) : subscribePayload
+  cancelsubcribe(UID:String!): cancelsubscribePayload
+}
+
+type loginPayload {
+  isSuccess: String
+  errMessage: String
+  token: String
+}
+
+type myProfilePayload {
+  nickName: String
+  introduction: String
+  phoneNumber: String
+  UID: String
+}
+
+type getMessagePayload {
+  isSuccess:Boolean
+  errMessage:String
+}
+
+type cancelsubscribePayload {
+  isSuccess:Boolean
+  errMessage:String
+}
+
+type subscribePayload { 
+  isSuccess:Boolean
+  errMessage:String
+}
+
+type changeintroductionPayload {
+  isSuccess:Boolean
+  errMessage:String
+}
+
+type changenickNamePayload {
+  isSuccess:Boolean
+  errMessage:String
+}

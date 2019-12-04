@@ -228,16 +228,16 @@ export type TokenOrderByInput =
   | "updatedAt_DESC";
 
 export type UserOrderByInput =
-  | "UID_ASC"
-  | "UID_DESC"
+  | "id_ASC"
+  | "id_DESC"
   | "phoneNumber_ASC"
   | "phoneNumber_DESC"
   | "nickName_ASC"
   | "nickName_DESC"
   | "address_ASC"
   | "address_DESC"
-  | "id_ASC"
-  | "id_DESC"
+  | "introduction_ASC"
+  | "introduction_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -326,24 +326,24 @@ export interface TokenWhereInput {
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
-  UID: String;
+  id: ID_Input;
 }>;
 
 export interface UserWhereInput {
-  UID?: String;
-  UID_not?: String;
-  UID_in?: String[] | String;
-  UID_not_in?: String[] | String;
-  UID_lt?: String;
-  UID_lte?: String;
-  UID_gt?: String;
-  UID_gte?: String;
-  UID_contains?: String;
-  UID_not_contains?: String;
-  UID_starts_with?: String;
-  UID_not_starts_with?: String;
-  UID_ends_with?: String;
-  UID_not_ends_with?: String;
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
   phoneNumber?: String;
   phoneNumber_not?: String;
   phoneNumber_in?: String[] | String;
@@ -386,6 +386,20 @@ export interface UserWhereInput {
   address_not_starts_with?: String;
   address_ends_with?: String;
   address_not_ends_with?: String;
+  introduction?: String;
+  introduction_not?: String;
+  introduction_in?: String[] | String;
+  introduction_not_in?: String[] | String;
+  introduction_lt?: String;
+  introduction_lte?: String;
+  introduction_gt?: String;
+  introduction_gte?: String;
+  introduction_contains?: String;
+  introduction_not_contains?: String;
+  introduction_starts_with?: String;
+  introduction_not_starts_with?: String;
+  introduction_ends_with?: String;
+  introduction_not_ends_with?: String;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
@@ -506,24 +520,24 @@ export interface TokenUpdateManyMutationInput {
 }
 
 export interface UserCreateInput {
-  UID: String;
   phoneNumber: String;
   nickName: String;
-  address: String;
+  address?: String;
+  introduction: String;
 }
 
 export interface UserUpdateInput {
-  UID?: String;
   phoneNumber?: String;
   nickName?: String;
   address?: String;
+  introduction?: String;
 }
 
 export interface UserUpdateManyMutationInput {
-  UID?: String;
   phoneNumber?: String;
   nickName?: String;
   address?: String;
+  introduction?: String;
 }
 
 export interface followCreateInput {
@@ -702,26 +716,29 @@ export interface AggregateTokenSubscription
 }
 
 export interface User {
-  UID: String;
+  id: ID_Output;
   phoneNumber: String;
   nickName: String;
-  address: String;
+  address?: String;
+  introduction: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
-  UID: () => Promise<String>;
+  id: () => Promise<ID_Output>;
   phoneNumber: () => Promise<String>;
   nickName: () => Promise<String>;
   address: () => Promise<String>;
+  introduction: () => Promise<String>;
 }
 
 export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
-  UID: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
   phoneNumber: () => Promise<AsyncIterator<String>>;
   nickName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
+  introduction: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserConnection {
@@ -1019,28 +1036,31 @@ export interface UserSubscriptionPayloadSubscription
 }
 
 export interface UserPreviousValues {
-  UID: String;
+  id: ID_Output;
   phoneNumber: String;
   nickName: String;
-  address: String;
+  address?: String;
+  introduction: String;
 }
 
 export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
-  UID: () => Promise<String>;
+  id: () => Promise<ID_Output>;
   phoneNumber: () => Promise<String>;
   nickName: () => Promise<String>;
   address: () => Promise<String>;
+  introduction: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
-  UID: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
   phoneNumber: () => Promise<AsyncIterator<String>>;
   nickName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
+  introduction: () => Promise<AsyncIterator<String>>;
 }
 
 export interface followSubscriptionPayload {

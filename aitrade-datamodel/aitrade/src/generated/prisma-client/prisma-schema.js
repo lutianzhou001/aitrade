@@ -443,10 +443,11 @@ input transactionsWhereInput {
 }
 
 type User {
-  UID: String!
+  id: ID!
   phoneNumber: String!
   nickName: String!
-  address: String!
+  address: String
+  introduction: String!
 }
 
 type UserConnection {
@@ -456,10 +457,10 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  UID: String!
   phoneNumber: String!
   nickName: String!
-  address: String!
+  address: String
+  introduction: String!
 }
 
 type UserEdge {
@@ -468,16 +469,16 @@ type UserEdge {
 }
 
 enum UserOrderByInput {
-  UID_ASC
-  UID_DESC
+  id_ASC
+  id_DESC
   phoneNumber_ASC
   phoneNumber_DESC
   nickName_ASC
   nickName_DESC
   address_ASC
   address_DESC
-  id_ASC
-  id_DESC
+  introduction_ASC
+  introduction_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -485,10 +486,11 @@ enum UserOrderByInput {
 }
 
 type UserPreviousValues {
-  UID: String!
+  id: ID!
   phoneNumber: String!
   nickName: String!
-  address: String!
+  address: String
+  introduction: String!
 }
 
 type UserSubscriptionPayload {
@@ -510,34 +512,34 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
-  UID: String
   phoneNumber: String
   nickName: String
   address: String
+  introduction: String
 }
 
 input UserUpdateManyMutationInput {
-  UID: String
   phoneNumber: String
   nickName: String
   address: String
+  introduction: String
 }
 
 input UserWhereInput {
-  UID: String
-  UID_not: String
-  UID_in: [String!]
-  UID_not_in: [String!]
-  UID_lt: String
-  UID_lte: String
-  UID_gt: String
-  UID_gte: String
-  UID_contains: String
-  UID_not_contains: String
-  UID_starts_with: String
-  UID_not_starts_with: String
-  UID_ends_with: String
-  UID_not_ends_with: String
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
   phoneNumber: String
   phoneNumber_not: String
   phoneNumber_in: [String!]
@@ -580,13 +582,27 @@ input UserWhereInput {
   address_not_starts_with: String
   address_ends_with: String
   address_not_ends_with: String
+  introduction: String
+  introduction_not: String
+  introduction_in: [String!]
+  introduction_not_in: [String!]
+  introduction_lt: String
+  introduction_lte: String
+  introduction_gt: String
+  introduction_gte: String
+  introduction_contains: String
+  introduction_not_contains: String
+  introduction_starts_with: String
+  introduction_not_starts_with: String
+  introduction_ends_with: String
+  introduction_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
 }
 
 input UserWhereUniqueInput {
-  UID: String
+  id: ID
 }
 `
       }

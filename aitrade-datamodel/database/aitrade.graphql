@@ -1,8 +1,9 @@
 type User {
-	UID: String! @unique
+	id: ID! @unique
 	phoneNumber: String!
     nickName: String!
-    address: String!
+    address: String
+	introduction: String!
 }
 
 type Token {
