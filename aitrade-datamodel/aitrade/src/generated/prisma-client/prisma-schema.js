@@ -578,6 +578,7 @@ type User {
   moment: Moment
   apiKey: String
   apiSecret: String
+  passPhrase: String
 }
 
 type UserConnection {
@@ -594,6 +595,7 @@ input UserCreateInput {
   moment: MomentCreateOneWithoutUserInput
   apiKey: String
   apiSecret: String
+  passPhrase: String
 }
 
 input UserCreateOneWithoutMomentInput {
@@ -608,6 +610,7 @@ input UserCreateWithoutMomentInput {
   introduction: String!
   apiKey: String
   apiSecret: String
+  passPhrase: String
 }
 
 type UserEdge {
@@ -632,6 +635,8 @@ enum UserOrderByInput {
   apiKey_DESC
   apiSecret_ASC
   apiSecret_DESC
+  passPhrase_ASC
+  passPhrase_DESC
 }
 
 type UserPreviousValues {
@@ -643,6 +648,7 @@ type UserPreviousValues {
   introduction: String!
   apiKey: String
   apiSecret: String
+  passPhrase: String
 }
 
 type UserSubscriptionPayload {
@@ -671,6 +677,7 @@ input UserUpdateInput {
   moment: MomentUpdateOneWithoutUserInput
   apiKey: String
   apiSecret: String
+  passPhrase: String
 }
 
 input UserUpdateManyMutationInput {
@@ -680,6 +687,7 @@ input UserUpdateManyMutationInput {
   introduction: String
   apiKey: String
   apiSecret: String
+  passPhrase: String
 }
 
 input UserWhereInput {
@@ -790,6 +798,20 @@ input UserWhereInput {
   apiSecret_not_starts_with: String
   apiSecret_ends_with: String
   apiSecret_not_ends_with: String
+  passPhrase: String
+  passPhrase_not: String
+  passPhrase_in: [String!]
+  passPhrase_not_in: [String!]
+  passPhrase_lt: String
+  passPhrase_lte: String
+  passPhrase_gt: String
+  passPhrase_gte: String
+  passPhrase_contains: String
+  passPhrase_not_contains: String
+  passPhrase_starts_with: String
+  passPhrase_not_starts_with: String
+  passPhrase_ends_with: String
+  passPhrase_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

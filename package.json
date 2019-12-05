@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/lutianzhou001/aitrade#readme",
   "dependencies": {
+    "@okfe/okex-node": "0.0.52",
     "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",

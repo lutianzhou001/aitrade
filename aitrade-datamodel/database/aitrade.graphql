@@ -8,6 +8,7 @@ type User {
 	moment: Moment
 	apiKey: String
 	apiSecret: String
+	passPhrase: String
 }
 
 type Token {

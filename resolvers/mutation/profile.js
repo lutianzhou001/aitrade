@@ -55,10 +55,48 @@ const profile = {
                     }
                 }
             }
-        } catch (error) {
+        } catch (err) {
             return {
                 isSuccess: false,
-                errMessage: error.message
+                errMessage: err.message
+            }
+        }
+    },
+
+    async changeOKEXInfo(parent, args, ctx, info) {
+        try {
+            const userId = getUserId(ctx);
+            const users = await ctx.prisma.users({ where: { id: userId } })
+            if (!users) {
+                throw new Error("cannot find this user")
+            } else {
+                const updateData = {};
+                if (args.apiKey) {
+                    updateData.apiKey = args.apiKey
+                }
+                if (args.apiSecret) {
+                    updateData.apiSecret = args.apiSecret
+                }
+                if (args.passPhrase) {
+                    updateData.passPhrase = args.passPhrase
+                }
+                const changeIntroduction = await ctx.prisma.updateUser({
+                    data: updateData,
+                    where: {
+                        id: userId
+                    }
+                });
+                if (changeIntroduction) {
+                    return {
+                        isSuccess: true,
+                        errMessage: null
+                    }
+                }
+            }
+        } catch (err) {
+            return {
+                isSuccess: false,
+                errMessage: err.errMessage
             }
         }
     }

@@ -4,6 +4,7 @@ const users = {
     async me(parent, args, ctx, info) {
         try {
             const userId = getUserId(ctx);
+            console.log("handle request me");
             console.log(userId);
             const me = await ctx.prisma.user({
                 id: userId

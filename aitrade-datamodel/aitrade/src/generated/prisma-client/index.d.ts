@@ -276,7 +276,9 @@ export type UserOrderByInput =
   | "apiKey_ASC"
   | "apiKey_DESC"
   | "apiSecret_ASC"
-  | "apiSecret_DESC";
+  | "apiSecret_DESC"
+  | "passPhrase_ASC"
+  | "passPhrase_DESC";
 
 export interface UserCreateInput {
   phoneNumber: String;
@@ -286,6 +288,7 @@ export interface UserCreateInput {
   moment?: Maybe<MomentCreateOneWithoutUserInput>;
   apiKey?: Maybe<String>;
   apiSecret?: Maybe<String>;
+  passPhrase?: Maybe<String>;
 }
 
 export interface FollowCreateInput {
@@ -352,6 +355,7 @@ export interface UserUpdateManyMutationInput {
   introduction?: Maybe<String>;
   apiKey?: Maybe<String>;
   apiSecret?: Maybe<String>;
+  passPhrase?: Maybe<String>;
 }
 
 export interface TokenUpdateManyMutationInput {
@@ -468,6 +472,20 @@ export interface UserWhereInput {
   apiSecret_not_starts_with?: Maybe<String>;
   apiSecret_ends_with?: Maybe<String>;
   apiSecret_not_ends_with?: Maybe<String>;
+  passPhrase?: Maybe<String>;
+  passPhrase_not?: Maybe<String>;
+  passPhrase_in?: Maybe<String[] | String>;
+  passPhrase_not_in?: Maybe<String[] | String>;
+  passPhrase_lt?: Maybe<String>;
+  passPhrase_lte?: Maybe<String>;
+  passPhrase_gt?: Maybe<String>;
+  passPhrase_gte?: Maybe<String>;
+  passPhrase_contains?: Maybe<String>;
+  passPhrase_not_contains?: Maybe<String>;
+  passPhrase_starts_with?: Maybe<String>;
+  passPhrase_not_starts_with?: Maybe<String>;
+  passPhrase_ends_with?: Maybe<String>;
+  passPhrase_not_ends_with?: Maybe<String>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -612,6 +630,7 @@ export interface UserCreateWithoutMomentInput {
   introduction: String;
   apiKey?: Maybe<String>;
   apiSecret?: Maybe<String>;
+  passPhrase?: Maybe<String>;
 }
 
 export interface MomentWhereInput {
@@ -715,6 +734,7 @@ export interface UserUpdateInput {
   moment?: Maybe<MomentUpdateOneWithoutUserInput>;
   apiKey?: Maybe<String>;
   apiSecret?: Maybe<String>;
+  passPhrase?: Maybe<String>;
 }
 
 export interface MomentUpsertWithoutUserInput {
@@ -783,6 +803,7 @@ export interface User {
   introduction: String;
   apiKey?: String;
   apiSecret?: String;
+  passPhrase?: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -795,6 +816,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   moment: <T = MomentPromise>() => T;
   apiKey: () => Promise<String>;
   apiSecret: () => Promise<String>;
+  passPhrase: () => Promise<String>;
 }
 
 export interface UserSubscription
@@ -809,6 +831,7 @@ export interface UserSubscription
   moment: <T = MomentSubscription>() => T;
   apiKey: () => Promise<AsyncIterator<String>>;
   apiSecret: () => Promise<AsyncIterator<String>>;
+  passPhrase: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserNullablePromise
@@ -823,6 +846,7 @@ export interface UserNullablePromise
   moment: <T = MomentPromise>() => T;
   apiKey: () => Promise<String>;
   apiSecret: () => Promise<String>;
+  passPhrase: () => Promise<String>;
 }
 
 export interface Follow {
@@ -889,6 +913,7 @@ export interface UserPreviousValues {
   introduction: String;
   apiKey?: String;
   apiSecret?: String;
+  passPhrase?: String;
 }
 
 export interface UserPreviousValuesPromise
@@ -902,6 +927,7 @@ export interface UserPreviousValuesPromise
   introduction: () => Promise<String>;
   apiKey: () => Promise<String>;
   apiSecret: () => Promise<String>;
+  passPhrase: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -915,6 +941,7 @@ export interface UserPreviousValuesSubscription
   introduction: () => Promise<AsyncIterator<String>>;
   apiKey: () => Promise<AsyncIterator<String>>;
   apiSecret: () => Promise<AsyncIterator<String>>;
+  passPhrase: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateUser {
