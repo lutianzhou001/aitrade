@@ -1,12 +1,12 @@
-const { getUserId } = require('../../utills/utils')
+const { getUserId } = require('../../utills/utils');
 
 const profile = {
     async changenickName(parent, args, ctx, info) {
         try {
             //第一步要解token
-            const userId = getUserId(ctx)
-            const users = await ctx.prisma.users({ where: { id: userId } })
-            if (users) {
+            const userId = getUserId(ctx);
+            const users = await ctx.prisma.users({ where: { id: userId } });
+            if (!users) {
                 throw new Error("cannot find this user")
             } else {
                 const changenickName = await ctx.prisma.updateUser({
@@ -35,9 +35,9 @@ const profile = {
 
     async changeIntroduction(parent, args, ctx, info) {
         try {
-            const userId = getUserId(ctx)
+            const userId = getUserId(ctx);
             const users = await ctx.prisma.users({ where: { id: userId } })
-            if (users) {
+            if (!users) {
                 throw new Error("cannot find this user")
             } else {
                 const changeIntroduction = await ctx.prisma.updateUser({
@@ -62,6 +62,6 @@ const profile = {
             }
         }
     }
-}
+};
 
-module.exports = { auth }
+module.exports = { profile };

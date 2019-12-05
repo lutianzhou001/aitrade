@@ -1,27 +1,30 @@
 type Query {
-  myProfile: myProfilePayload!
+  me: mePayload
+  getUser(UID:String!): getUserPayload
+  getUsers(skip: Int, first: Int): getUsersPayload
+  getFollowers(skip: Int, first: Int): getFollowersPayload
+  getAttentions(skip: Int, first: Int): getAttentionsPayload
+
+  getMoments(skip: Int, first: Int, UID: String): getMomentsPayload
 }
 
 type Mutation {
-	changeintroduction(introduction:String): changeintroductionPayload
+  changeIntroduction(introduction:String): changeintroductionPayload
   changenickName(nickName:String): changenickNamePayload
-	login(phoneNumber: String!, sms: String!): loginPayload
+  login(phoneNumber: String!, sms: String!): loginPayload
   getMessage: getMessagePayload
   subcribe(UID:String!) : subscribePayload
   cancelsubcribe(UID:String!): cancelsubscribePayload
+
+  attentionTo(UID:String!): attentionToPayload
+
+  createMoment(title:String, content:String): createMomentPayload
 }
 
 type loginPayload {
   isSuccess: String
   errMessage: String
   token: String
-}
-
-type myProfilePayload {
-  nickName: String
-  introduction: String
-  phoneNumber: String
-  UID: String
 }
 
 type getMessagePayload {
@@ -47,4 +50,65 @@ type changeintroductionPayload {
 type changenickNamePayload {
   isSuccess:Boolean
   errMessage:String
+}
+
+type user {
+  id: String
+  phoneNumber: String
+  nickName: String
+  address: String
+  introduction: String
+}
+
+type mePayload {
+  isSuccess:Boolean
+  errMessage:String
+  user:user
+}
+
+type getUserPayload {
+  isSuccess:Boolean
+  errMessage:String
+  user:user
+}
+
+type getUsersPayload {
+  isSuccess:Boolean
+  errMessage:String
+  users:[user]
+}
+
+type attentionToPayload {
+  isSuccess:Boolean
+  errMessage:String
+}
+
+type getFollowersPayload {
+  isSuccess:Boolean
+  errMessage:String
+  users:[user]
+}
+
+type getAttentionsPayload {
+  isSuccess:Boolean
+  errMessage:String
+  users:[user]
+}
+
+type createMomentPayload {
+  isSuccess:Boolean
+  errMessage:String
+}
+
+type moment {
+  user:user
+  createdAt:String
+  title:String
+  content:String
+}
+
+type getMomentsPayload{
+  isSuccess:Boolean
+  errMessage:String
+  moments:[moment]
 }

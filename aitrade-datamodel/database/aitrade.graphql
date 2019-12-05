@@ -1,9 +1,13 @@
 type User {
 	id: ID! @unique
+	createdAt: DateTime! @createdAt
 	phoneNumber: String!
     nickName: String!
     address: String
 	introduction: String!
+	moment: Moment
+	apiKey: String
+	apiSecret: String
 }
 
 type Token {
@@ -12,14 +16,21 @@ type Token {
 	isCopycat:String!
 }
 
-type follow {
+type Follow {
     follower: String!
 	leader: String!
 }
 
-type transactions {
+type Transactions {
 	from : String!
 	to: String!
 	value: String!
 	type: String!
+}
+
+type Moment {
+	user: User
+	createdAt: DateTime! @createdAt
+	title: String
+	content: String
 }

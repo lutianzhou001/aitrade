@@ -13,11 +13,15 @@ var models = [
     embedded: false
   },
   {
-    name: "follow",
+    name: "Follow",
     embedded: false
   },
   {
-    name: "transactions",
+    name: "Transactions",
+    embedded: false
+  },
+  {
+    name: "Moment",
     embedded: false
   }
 ];
