@@ -1,21 +1,36 @@
-const { PublicClient } = require('@okfe/okex-node');
-const { V3WebsocketClient } = require('@okfe/okex-node');
-const { AuthenticatedClient } = require('@okfe/okex-node');
-const pClient = new PublicClient();
-
-const wss = new V3WebsocketClient();
+const { getWallet } = require('../../utills/utils');
+const { getUserId } = require('../../utills/utils');
 
 const okex = {
-    async getOpenInterest(parent, args, ctx, info) {
+    async getWalletInfo(parent, args, ctx, info) {
         try {
+            const userId = getUserId(ctx);
             const user = await ctx.prisma.user({
-                id: args.UID
+                id: userId
             });
             if ( (!user.apiKey) || (!user.apiSecret) || (!user.passPhrase) ) {
-
+                return {
+                    isSuccess: false,
+                    errMessage: '用户OKEX信息不完整',
+                    assetses: null
+                }
             } else {
-                const authClient = new AuthenticatedClient(user.apiKey, user.apiSecret, user.passPhrase);
-
+                console.log('ready to request okex');
+                let res = getWallet(user);
+                console.log(res);
+                if (res.error) {
+                    return {
+                        isSuccess: false,
+                        errMessage: res.error,
+                        assetses: null
+                    }
+                } else {
+                    return {
+                        isSuccess: true,
+                        errMessage: null,
+                        assetses: res.data
+                    }
+                }
             }
         } catch (err) {
             return {

@@ -6,6 +6,8 @@ type Query {
   getAttentions(skip: Int, first: Int): getAttentionsPayload
 
   getMoments(skip: Int, first: Int, UID: String): getMomentsPayload
+
+  getWalletInfo: getWalletInfoPayload
 }
 
 type Mutation {
@@ -64,6 +66,9 @@ type user {
   nickName: String
   address: String
   introduction: String
+  apiKey: String
+  apiSecret: String
+  passPhrase: String
 }
 
 type mePayload {
@@ -113,8 +118,21 @@ type moment {
   content:String
 }
 
-type getMomentsPayload{
+type getMomentsPayload {
   isSuccess:Boolean
   errMessage:String
   moments:[moment]
+}
+
+type assets {
+  available:String
+  balance:String
+  currency:String
+  hold:String
+}
+
+type getWalletInfoPayload {
+  isSuccess:Boolean
+  errMessage:String
+  assetses:[assets]
 }

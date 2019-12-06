@@ -70,7 +70,7 @@ const profile = {
             if (!users) {
                 throw new Error("cannot find this user")
             } else {
-                const updateData = {};
+                let updateData = {};
                 if (args.apiKey) {
                     updateData.apiKey = args.apiKey
                 }
