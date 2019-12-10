@@ -40,3 +40,30 @@ type rate {
 	key: String @unique
 	value: String
 }
+
+type onchain {
+	from : String!
+	to: String!
+	amount: String!
+	timestamp: Int!
+}
+
+type margincloseout {
+	timestamp: Int!
+	exchange: String!
+	contract_name: String!
+	contract_type: String!
+	closeout_type: String!
+    contract_price: String!
+	amount: String!
+}
+
+type contract {
+	long: Int!
+	short: Int!
+}
+
+type KOL {
+	long: Int!
+	short: Int!
+}
