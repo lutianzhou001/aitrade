@@ -1,5 +1,7 @@
 type Query {
+#  获取个人信息
   me: mePayload
+#  获取单一用户信息
   getUser(UID:String!): getUserPayload
   getUsers(skip: Int, first: Int): getUsersPayload
   getFollowers(skip: Int, first: Int): getFollowersPayload
@@ -129,6 +131,7 @@ type assets {
   balance:String
   currency:String
   hold:String
+  price:String
 }
 
 type getWalletInfoPayload {

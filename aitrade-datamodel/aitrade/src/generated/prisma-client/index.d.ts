@@ -21,6 +21,7 @@ export interface Exists {
   token: (where?: TokenWhereInput) => Promise<boolean>;
   transactions: (where?: TransactionsWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
+  rate: (where?: rateWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -134,6 +135,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => UserConnectionPromise;
+  rate: (where: rateWhereUniqueInput) => rateNullablePromise;
+  rates: (args?: {
+    where?: rateWhereInput;
+    orderBy?: rateOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<rate>;
+  ratesConnection: (args?: {
+    where?: rateWhereInput;
+    orderBy?: rateOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => rateConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -192,6 +212,22 @@ export interface Prisma {
   }) => UserPromise;
   deleteUser: (where: UserWhereUniqueInput) => UserPromise;
   deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
+  createrate: (data: rateCreateInput) => ratePromise;
+  updaterate: (args: {
+    data: rateUpdateInput;
+    where: rateWhereUniqueInput;
+  }) => ratePromise;
+  updateManyrates: (args: {
+    data: rateUpdateManyMutationInput;
+    where?: rateWhereInput;
+  }) => BatchPayloadPromise;
+  upsertrate: (args: {
+    where: rateWhereUniqueInput;
+    create: rateCreateInput;
+    update: rateUpdateInput;
+  }) => ratePromise;
+  deleterate: (where: rateWhereUniqueInput) => ratePromise;
+  deleteManyrates: (where?: rateWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -216,6 +252,9 @@ export interface Subscription {
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
+  rate: (
+    where?: rateSubscriptionWhereInput
+  ) => rateSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -226,6 +265,8 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
 export type MomentOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC"
@@ -234,21 +275,11 @@ export type MomentOrderByInput =
   | "content_ASC"
   | "content_DESC";
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
 export type FollowOrderByInput =
   | "follower_ASC"
   | "follower_DESC"
   | "leader_ASC"
   | "leader_DESC";
-
-export type TokenOrderByInput =
-  | "tokenID_ASC"
-  | "tokenID_DESC"
-  | "tokenName_ASC"
-  | "tokenName_DESC"
-  | "isCopycat_ASC"
-  | "isCopycat_DESC";
 
 export type TransactionsOrderByInput =
   | "from_ASC"
@@ -280,32 +311,19 @@ export type UserOrderByInput =
   | "passPhrase_ASC"
   | "passPhrase_DESC";
 
-export interface UserCreateInput {
-  phoneNumber: String;
-  nickName: String;
-  address?: Maybe<String>;
-  introduction: String;
-  moment?: Maybe<MomentCreateOneWithoutUserInput>;
-  apiKey?: Maybe<String>;
-  apiSecret?: Maybe<String>;
-  passPhrase?: Maybe<String>;
-}
+export type rateOrderByInput =
+  | "key_ASC"
+  | "key_DESC"
+  | "value_ASC"
+  | "value_DESC";
 
-export interface FollowCreateInput {
-  follower: String;
-  leader: String;
-}
-
-export interface TokenSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TokenWhereInput>;
-  AND?: Maybe<TokenSubscriptionWhereInput[] | TokenSubscriptionWhereInput>;
-  OR?: Maybe<TokenSubscriptionWhereInput[] | TokenSubscriptionWhereInput>;
-  NOT?: Maybe<TokenSubscriptionWhereInput[] | TokenSubscriptionWhereInput>;
-}
+export type TokenOrderByInput =
+  | "tokenID_ASC"
+  | "tokenID_DESC"
+  | "tokenName_ASC"
+  | "tokenName_DESC"
+  | "isCopycat_ASC"
+  | "isCopycat_DESC";
 
 export interface FollowWhereInput {
   follower?: Maybe<String>;
@@ -341,27 +359,94 @@ export interface FollowWhereInput {
   NOT?: Maybe<FollowWhereInput[] | FollowWhereInput>;
 }
 
-export interface TransactionsCreateInput {
-  from: String;
-  to: String;
-  value: String;
-  type: String;
+export interface TransactionsWhereInput {
+  from?: Maybe<String>;
+  from_not?: Maybe<String>;
+  from_in?: Maybe<String[] | String>;
+  from_not_in?: Maybe<String[] | String>;
+  from_lt?: Maybe<String>;
+  from_lte?: Maybe<String>;
+  from_gt?: Maybe<String>;
+  from_gte?: Maybe<String>;
+  from_contains?: Maybe<String>;
+  from_not_contains?: Maybe<String>;
+  from_starts_with?: Maybe<String>;
+  from_not_starts_with?: Maybe<String>;
+  from_ends_with?: Maybe<String>;
+  from_not_ends_with?: Maybe<String>;
+  to?: Maybe<String>;
+  to_not?: Maybe<String>;
+  to_in?: Maybe<String[] | String>;
+  to_not_in?: Maybe<String[] | String>;
+  to_lt?: Maybe<String>;
+  to_lte?: Maybe<String>;
+  to_gt?: Maybe<String>;
+  to_gte?: Maybe<String>;
+  to_contains?: Maybe<String>;
+  to_not_contains?: Maybe<String>;
+  to_starts_with?: Maybe<String>;
+  to_not_starts_with?: Maybe<String>;
+  to_ends_with?: Maybe<String>;
+  to_not_ends_with?: Maybe<String>;
+  value?: Maybe<String>;
+  value_not?: Maybe<String>;
+  value_in?: Maybe<String[] | String>;
+  value_not_in?: Maybe<String[] | String>;
+  value_lt?: Maybe<String>;
+  value_lte?: Maybe<String>;
+  value_gt?: Maybe<String>;
+  value_gte?: Maybe<String>;
+  value_contains?: Maybe<String>;
+  value_not_contains?: Maybe<String>;
+  value_starts_with?: Maybe<String>;
+  value_not_starts_with?: Maybe<String>;
+  value_ends_with?: Maybe<String>;
+  value_not_ends_with?: Maybe<String>;
+  type?: Maybe<String>;
+  type_not?: Maybe<String>;
+  type_in?: Maybe<String[] | String>;
+  type_not_in?: Maybe<String[] | String>;
+  type_lt?: Maybe<String>;
+  type_lte?: Maybe<String>;
+  type_gt?: Maybe<String>;
+  type_gte?: Maybe<String>;
+  type_contains?: Maybe<String>;
+  type_not_contains?: Maybe<String>;
+  type_starts_with?: Maybe<String>;
+  type_not_starts_with?: Maybe<String>;
+  type_ends_with?: Maybe<String>;
+  type_not_ends_with?: Maybe<String>;
+  AND?: Maybe<TransactionsWhereInput[] | TransactionsWhereInput>;
+  OR?: Maybe<TransactionsWhereInput[] | TransactionsWhereInput>;
+  NOT?: Maybe<TransactionsWhereInput[] | TransactionsWhereInput>;
 }
 
-export interface UserUpdateManyMutationInput {
-  phoneNumber?: Maybe<String>;
-  nickName?: Maybe<String>;
-  address?: Maybe<String>;
-  introduction?: Maybe<String>;
-  apiKey?: Maybe<String>;
-  apiSecret?: Maybe<String>;
-  passPhrase?: Maybe<String>;
+export interface FollowSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<FollowWhereInput>;
+  AND?: Maybe<FollowSubscriptionWhereInput[] | FollowSubscriptionWhereInput>;
+  OR?: Maybe<FollowSubscriptionWhereInput[] | FollowSubscriptionWhereInput>;
+  NOT?: Maybe<FollowSubscriptionWhereInput[] | FollowSubscriptionWhereInput>;
 }
 
-export interface TokenUpdateManyMutationInput {
-  tokenID?: Maybe<ID_Input>;
-  tokenName?: Maybe<String>;
-  isCopycat?: Maybe<String>;
+export interface TransactionsSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TransactionsWhereInput>;
+  AND?: Maybe<
+    TransactionsSubscriptionWhereInput[] | TransactionsSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    TransactionsSubscriptionWhereInput[] | TransactionsSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    TransactionsSubscriptionWhereInput[] | TransactionsSubscriptionWhereInput
+  >;
 }
 
 export interface UserWhereInput {
@@ -491,77 +576,45 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface TokenUpdateInput {
+export interface TransactionsUpdateManyMutationInput {
+  from?: Maybe<String>;
+  to?: Maybe<String>;
+  value?: Maybe<String>;
+  type?: Maybe<String>;
+}
+
+export interface rateUpdateInput {
+  key?: Maybe<String>;
+  value?: Maybe<String>;
+}
+
+export interface TransactionsCreateInput {
+  from: String;
+  to: String;
+  value: String;
+  type: String;
+}
+
+export interface rateCreateInput {
+  key?: Maybe<String>;
+  value?: Maybe<String>;
+}
+
+export interface TokenUpdateManyMutationInput {
   tokenID?: Maybe<ID_Input>;
   tokenName?: Maybe<String>;
   isCopycat?: Maybe<String>;
 }
 
-export interface MomentUpdateWithoutUserDataInput {
-  title?: Maybe<String>;
-  content?: Maybe<String>;
+export interface MomentUpsertWithoutUserInput {
+  update: MomentUpdateWithoutUserDataInput;
+  create: MomentCreateWithoutUserInput;
 }
 
-export interface TransactionsWhereInput {
-  from?: Maybe<String>;
-  from_not?: Maybe<String>;
-  from_in?: Maybe<String[] | String>;
-  from_not_in?: Maybe<String[] | String>;
-  from_lt?: Maybe<String>;
-  from_lte?: Maybe<String>;
-  from_gt?: Maybe<String>;
-  from_gte?: Maybe<String>;
-  from_contains?: Maybe<String>;
-  from_not_contains?: Maybe<String>;
-  from_starts_with?: Maybe<String>;
-  from_not_starts_with?: Maybe<String>;
-  from_ends_with?: Maybe<String>;
-  from_not_ends_with?: Maybe<String>;
-  to?: Maybe<String>;
-  to_not?: Maybe<String>;
-  to_in?: Maybe<String[] | String>;
-  to_not_in?: Maybe<String[] | String>;
-  to_lt?: Maybe<String>;
-  to_lte?: Maybe<String>;
-  to_gt?: Maybe<String>;
-  to_gte?: Maybe<String>;
-  to_contains?: Maybe<String>;
-  to_not_contains?: Maybe<String>;
-  to_starts_with?: Maybe<String>;
-  to_not_starts_with?: Maybe<String>;
-  to_ends_with?: Maybe<String>;
-  to_not_ends_with?: Maybe<String>;
-  value?: Maybe<String>;
-  value_not?: Maybe<String>;
-  value_in?: Maybe<String[] | String>;
-  value_not_in?: Maybe<String[] | String>;
-  value_lt?: Maybe<String>;
-  value_lte?: Maybe<String>;
-  value_gt?: Maybe<String>;
-  value_gte?: Maybe<String>;
-  value_contains?: Maybe<String>;
-  value_not_contains?: Maybe<String>;
-  value_starts_with?: Maybe<String>;
-  value_not_starts_with?: Maybe<String>;
-  value_ends_with?: Maybe<String>;
-  value_not_ends_with?: Maybe<String>;
-  type?: Maybe<String>;
-  type_not?: Maybe<String>;
-  type_in?: Maybe<String[] | String>;
-  type_not_in?: Maybe<String[] | String>;
-  type_lt?: Maybe<String>;
-  type_lte?: Maybe<String>;
-  type_gt?: Maybe<String>;
-  type_gte?: Maybe<String>;
-  type_contains?: Maybe<String>;
-  type_not_contains?: Maybe<String>;
-  type_starts_with?: Maybe<String>;
-  type_not_starts_with?: Maybe<String>;
-  type_ends_with?: Maybe<String>;
-  type_not_ends_with?: Maybe<String>;
-  AND?: Maybe<TransactionsWhereInput[] | TransactionsWhereInput>;
-  OR?: Maybe<TransactionsWhereInput[] | TransactionsWhereInput>;
-  NOT?: Maybe<TransactionsWhereInput[] | TransactionsWhereInput>;
+export interface TokenUpdateInput {
+  tokenID?: Maybe<ID_Input>;
+  tokenName?: Maybe<String>;
+  isCopycat?: Maybe<String>;
 }
 
 export interface MomentUpdateOneWithoutUserInput {
@@ -572,26 +625,41 @@ export interface MomentUpdateOneWithoutUserInput {
   disconnect?: Maybe<Boolean>;
 }
 
-export interface TransactionsSubscriptionWhereInput {
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateInput {
+  phoneNumber?: Maybe<String>;
+  nickName?: Maybe<String>;
+  address?: Maybe<String>;
+  introduction?: Maybe<String>;
+  moment?: Maybe<MomentUpdateOneWithoutUserInput>;
+  apiKey?: Maybe<String>;
+  apiSecret?: Maybe<String>;
+  passPhrase?: Maybe<String>;
+}
+
+export interface UserSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TransactionsWhereInput>;
-  AND?: Maybe<
-    TransactionsSubscriptionWhereInput[] | TransactionsSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    TransactionsSubscriptionWhereInput[] | TransactionsSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    TransactionsSubscriptionWhereInput[] | TransactionsSubscriptionWhereInput
-  >;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface MomentCreateWithoutUserInput {
-  title?: Maybe<String>;
-  content?: Maybe<String>;
+export interface TokenSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TokenWhereInput>;
+  AND?: Maybe<TokenSubscriptionWhereInput[] | TokenSubscriptionWhereInput>;
+  OR?: Maybe<TokenSubscriptionWhereInput[] | TokenSubscriptionWhereInput>;
+  NOT?: Maybe<TokenSubscriptionWhereInput[] | TokenSubscriptionWhereInput>;
 }
 
 export interface TokenCreateInput {
@@ -600,37 +668,13 @@ export interface TokenCreateInput {
   isCopycat: String;
 }
 
-export interface MomentSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<MomentWhereInput>;
-  AND?: Maybe<MomentSubscriptionWhereInput[] | MomentSubscriptionWhereInput>;
-  OR?: Maybe<MomentSubscriptionWhereInput[] | MomentSubscriptionWhereInput>;
-  NOT?: Maybe<MomentSubscriptionWhereInput[] | MomentSubscriptionWhereInput>;
+export interface MomentCreateOneWithoutUserInput {
+  create?: Maybe<MomentCreateWithoutUserInput>;
 }
 
 export interface MomentUpdateManyMutationInput {
   title?: Maybe<String>;
   content?: Maybe<String>;
-}
-
-export interface TransactionsUpdateManyMutationInput {
-  from?: Maybe<String>;
-  to?: Maybe<String>;
-  value?: Maybe<String>;
-  type?: Maybe<String>;
-}
-
-export interface UserCreateWithoutMomentInput {
-  phoneNumber: String;
-  nickName: String;
-  address?: Maybe<String>;
-  introduction: String;
-  apiKey?: Maybe<String>;
-  apiSecret?: Maybe<String>;
-  passPhrase?: Maybe<String>;
 }
 
 export interface MomentWhereInput {
@@ -676,70 +720,39 @@ export interface MomentWhereInput {
   NOT?: Maybe<MomentWhereInput[] | MomentWhereInput>;
 }
 
-export interface UserCreateOneWithoutMomentInput {
-  create?: Maybe<UserCreateWithoutMomentInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface FollowSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<FollowWhereInput>;
-  AND?: Maybe<FollowSubscriptionWhereInput[] | FollowSubscriptionWhereInput>;
-  OR?: Maybe<FollowSubscriptionWhereInput[] | FollowSubscriptionWhereInput>;
-  NOT?: Maybe<FollowSubscriptionWhereInput[] | FollowSubscriptionWhereInput>;
-}
-
-export interface MomentCreateOneWithoutUserInput {
-  create?: Maybe<MomentCreateWithoutUserInput>;
-}
-
-export interface FollowUpdateManyMutationInput {
-  follower?: Maybe<String>;
-  leader?: Maybe<String>;
-}
-
-export interface MomentCreateInput {
-  user?: Maybe<UserCreateOneWithoutMomentInput>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type TokenWhereUniqueInput = AtLeastOne<{
-  tokenID: Maybe<ID_Input>;
-}>;
-
-export interface UserUpdateInput {
-  phoneNumber?: Maybe<String>;
-  nickName?: Maybe<String>;
+export interface UserCreateWithoutMomentInput {
+  phoneNumber: String;
+  nickName: String;
   address?: Maybe<String>;
-  introduction?: Maybe<String>;
-  moment?: Maybe<MomentUpdateOneWithoutUserInput>;
+  introduction: String;
   apiKey?: Maybe<String>;
   apiSecret?: Maybe<String>;
   passPhrase?: Maybe<String>;
 }
 
-export interface MomentUpsertWithoutUserInput {
-  update: MomentUpdateWithoutUserDataInput;
-  create: MomentCreateWithoutUserInput;
+export interface MomentSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MomentWhereInput>;
+  AND?: Maybe<MomentSubscriptionWhereInput[] | MomentSubscriptionWhereInput>;
+  OR?: Maybe<MomentSubscriptionWhereInput[] | MomentSubscriptionWhereInput>;
+  NOT?: Maybe<MomentSubscriptionWhereInput[] | MomentSubscriptionWhereInput>;
+}
+
+export type rateWhereUniqueInput = AtLeastOne<{
+  key: Maybe<String>;
+}>;
+
+export interface MomentUpdateWithoutUserDataInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+}
+
+export interface UserCreateOneWithoutMomentInput {
+  create?: Maybe<UserCreateWithoutMomentInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface TokenWhereInput {
@@ -790,8 +803,170 @@ export interface TokenWhereInput {
   NOT?: Maybe<TokenWhereInput[] | TokenWhereInput>;
 }
 
+export interface rateWhereInput {
+  key?: Maybe<String>;
+  key_not?: Maybe<String>;
+  key_in?: Maybe<String[] | String>;
+  key_not_in?: Maybe<String[] | String>;
+  key_lt?: Maybe<String>;
+  key_lte?: Maybe<String>;
+  key_gt?: Maybe<String>;
+  key_gte?: Maybe<String>;
+  key_contains?: Maybe<String>;
+  key_not_contains?: Maybe<String>;
+  key_starts_with?: Maybe<String>;
+  key_not_starts_with?: Maybe<String>;
+  key_ends_with?: Maybe<String>;
+  key_not_ends_with?: Maybe<String>;
+  value?: Maybe<String>;
+  value_not?: Maybe<String>;
+  value_in?: Maybe<String[] | String>;
+  value_not_in?: Maybe<String[] | String>;
+  value_lt?: Maybe<String>;
+  value_lte?: Maybe<String>;
+  value_gt?: Maybe<String>;
+  value_gte?: Maybe<String>;
+  value_contains?: Maybe<String>;
+  value_not_contains?: Maybe<String>;
+  value_starts_with?: Maybe<String>;
+  value_not_starts_with?: Maybe<String>;
+  value_ends_with?: Maybe<String>;
+  value_not_ends_with?: Maybe<String>;
+  AND?: Maybe<rateWhereInput[] | rateWhereInput>;
+  OR?: Maybe<rateWhereInput[] | rateWhereInput>;
+  NOT?: Maybe<rateWhereInput[] | rateWhereInput>;
+}
+
+export interface UserCreateInput {
+  phoneNumber: String;
+  nickName: String;
+  address?: Maybe<String>;
+  introduction: String;
+  moment?: Maybe<MomentCreateOneWithoutUserInput>;
+  apiKey?: Maybe<String>;
+  apiSecret?: Maybe<String>;
+  passPhrase?: Maybe<String>;
+}
+
+export interface FollowCreateInput {
+  follower: String;
+  leader: String;
+}
+
+export interface FollowUpdateManyMutationInput {
+  follower?: Maybe<String>;
+  leader?: Maybe<String>;
+}
+
+export interface MomentCreateInput {
+  user?: Maybe<UserCreateOneWithoutMomentInput>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+}
+
+export interface rateSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<rateWhereInput>;
+  AND?: Maybe<rateSubscriptionWhereInput[] | rateSubscriptionWhereInput>;
+  OR?: Maybe<rateSubscriptionWhereInput[] | rateSubscriptionWhereInput>;
+  NOT?: Maybe<rateSubscriptionWhereInput[] | rateSubscriptionWhereInput>;
+}
+
+export interface rateUpdateManyMutationInput {
+  key?: Maybe<String>;
+  value?: Maybe<String>;
+}
+
+export interface MomentCreateWithoutUserInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+}
+
+export type TokenWhereUniqueInput = AtLeastOne<{
+  tokenID: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateManyMutationInput {
+  phoneNumber?: Maybe<String>;
+  nickName?: Maybe<String>;
+  address?: Maybe<String>;
+  introduction?: Maybe<String>;
+  apiKey?: Maybe<String>;
+  apiSecret?: Maybe<String>;
+  passPhrase?: Maybe<String>;
+}
+
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface Aggregaterate {
+  count: Int;
+}
+
+export interface AggregateratePromise
+  extends Promise<Aggregaterate>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregaterateSubscription
+  extends Promise<AsyncIterator<Aggregaterate>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Moment {
+  createdAt: DateTimeOutput;
+  title?: String;
+  content?: String;
+}
+
+export interface MomentPromise extends Promise<Moment>, Fragmentable {
+  user: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+}
+
+export interface MomentSubscription
+  extends Promise<AsyncIterator<Moment>>,
+    Fragmentable {
+  user: <T = UserSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+}
+
+export interface MomentNullablePromise
+  extends Promise<Moment | null>,
+    Fragmentable {
+  user: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+}
+
+export interface ratePreviousValues {
+  key?: String;
+  value?: String;
+}
+
+export interface ratePreviousValuesPromise
+  extends Promise<ratePreviousValues>,
+    Fragmentable {
+  key: () => Promise<String>;
+  value: () => Promise<String>;
+}
+
+export interface ratePreviousValuesSubscription
+  extends Promise<AsyncIterator<ratePreviousValues>>,
+    Fragmentable {
+  key: () => Promise<AsyncIterator<String>>;
+  value: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -873,35 +1048,86 @@ export interface FollowNullablePromise
   leader: () => Promise<String>;
 }
 
-export interface Moment {
-  createdAt: DateTimeOutput;
-  title?: String;
-  content?: String;
+export interface rateEdge {
+  node: rate;
+  cursor: String;
 }
 
-export interface MomentPromise extends Promise<Moment>, Fragmentable {
-  user: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
+export interface rateEdgePromise extends Promise<rateEdge>, Fragmentable {
+  node: <T = ratePromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface MomentSubscription
-  extends Promise<AsyncIterator<Moment>>,
+export interface rateEdgeSubscription
+  extends Promise<AsyncIterator<rateEdge>>,
     Fragmentable {
-  user: <T = UserSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
+  node: <T = rateSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface MomentNullablePromise
-  extends Promise<Moment | null>,
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  user: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface rateSubscriptionPayload {
+  mutation: MutationType;
+  node: rate;
+  updatedFields: String[];
+  previousValues: ratePreviousValues;
+}
+
+export interface rateSubscriptionPayloadPromise
+  extends Promise<rateSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ratePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ratePreviousValuesPromise>() => T;
+}
+
+export interface rateSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<rateSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = rateSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ratePreviousValuesSubscription>() => T;
+}
+
+export interface rate {
+  key?: String;
+  value?: String;
+}
+
+export interface ratePromise extends Promise<rate>, Fragmentable {
+  key: () => Promise<String>;
+  value: () => Promise<String>;
+}
+
+export interface rateSubscription
+  extends Promise<AsyncIterator<rate>>,
+    Fragmentable {
+  key: () => Promise<AsyncIterator<String>>;
+  value: () => Promise<AsyncIterator<String>>;
+}
+
+export interface rateNullablePromise
+  extends Promise<rate | null>,
+    Fragmentable {
+  key: () => Promise<String>;
+  value: () => Promise<String>;
 }
 
 export interface UserPreviousValues {
@@ -944,6 +1170,283 @@ export interface UserPreviousValuesSubscription
   passPhrase: () => Promise<AsyncIterator<String>>;
 }
 
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateFollow {
+  count: Int;
+}
+
+export interface AggregateFollowPromise
+  extends Promise<AggregateFollow>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateFollowSubscription
+  extends Promise<AsyncIterator<AggregateFollow>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateTransactions {
+  count: Int;
+}
+
+export interface AggregateTransactionsPromise
+  extends Promise<AggregateTransactions>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTransactionsSubscription
+  extends Promise<AsyncIterator<AggregateTransactions>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface FollowEdge {
+  node: Follow;
+  cursor: String;
+}
+
+export interface FollowEdgePromise extends Promise<FollowEdge>, Fragmentable {
+  node: <T = FollowPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface FollowEdgeSubscription
+  extends Promise<AsyncIterator<FollowEdge>>,
+    Fragmentable {
+  node: <T = FollowSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TransactionsConnection {
+  pageInfo: PageInfo;
+  edges: TransactionsEdge[];
+}
+
+export interface TransactionsConnectionPromise
+  extends Promise<TransactionsConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TransactionsEdge>>() => T;
+  aggregate: <T = AggregateTransactionsPromise>() => T;
+}
+
+export interface TransactionsConnectionSubscription
+  extends Promise<AsyncIterator<TransactionsConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TransactionsEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTransactionsSubscription>() => T;
+}
+
+export interface FollowSubscriptionPayload {
+  mutation: MutationType;
+  node: Follow;
+  updatedFields: String[];
+  previousValues: FollowPreviousValues;
+}
+
+export interface FollowSubscriptionPayloadPromise
+  extends Promise<FollowSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = FollowPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = FollowPreviousValuesPromise>() => T;
+}
+
+export interface FollowSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<FollowSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = FollowSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = FollowPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateToken {
+  count: Int;
+}
+
+export interface AggregateTokenPromise
+  extends Promise<AggregateToken>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTokenSubscription
+  extends Promise<AsyncIterator<AggregateToken>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface FollowPreviousValues {
+  follower: String;
+  leader: String;
+}
+
+export interface FollowPreviousValuesPromise
+  extends Promise<FollowPreviousValues>,
+    Fragmentable {
+  follower: () => Promise<String>;
+  leader: () => Promise<String>;
+}
+
+export interface FollowPreviousValuesSubscription
+  extends Promise<AsyncIterator<FollowPreviousValues>>,
+    Fragmentable {
+  follower: () => Promise<AsyncIterator<String>>;
+  leader: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TokenConnection {
+  pageInfo: PageInfo;
+  edges: TokenEdge[];
+}
+
+export interface TokenConnectionPromise
+  extends Promise<TokenConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TokenEdge>>() => T;
+  aggregate: <T = AggregateTokenPromise>() => T;
+}
+
+export interface TokenConnectionSubscription
+  extends Promise<AsyncIterator<TokenConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TokenEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTokenSubscription>() => T;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateMoment {
+  count: Int;
+}
+
+export interface AggregateMomentPromise
+  extends Promise<AggregateMoment>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMomentSubscription
+  extends Promise<AsyncIterator<AggregateMoment>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface MomentSubscriptionPayload {
+  mutation: MutationType;
+  node: Moment;
+  updatedFields: String[];
+  previousValues: MomentPreviousValues;
+}
+
+export interface MomentSubscriptionPayloadPromise
+  extends Promise<MomentSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = MomentPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = MomentPreviousValuesPromise>() => T;
+}
+
+export interface MomentSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MomentSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = MomentSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = MomentPreviousValuesSubscription>() => T;
+}
+
+export interface MomentConnection {
+  pageInfo: PageInfo;
+  edges: MomentEdge[];
+}
+
+export interface MomentConnectionPromise
+  extends Promise<MomentConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<MomentEdge>>() => T;
+  aggregate: <T = AggregateMomentPromise>() => T;
+}
+
+export interface MomentConnectionSubscription
+  extends Promise<AsyncIterator<MomentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MomentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMomentSubscription>() => T;
+}
+
+export interface MomentPreviousValues {
+  createdAt: DateTimeOutput;
+  title?: String;
+  content?: String;
+}
+
+export interface MomentPreviousValuesPromise
+  extends Promise<MomentPreviousValues>,
+    Fragmentable {
+  createdAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+}
+
+export interface MomentPreviousValuesSubscription
+  extends Promise<AsyncIterator<MomentPreviousValues>>,
+    Fragmentable {
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+}
+
 export interface AggregateUser {
   count: Int;
 }
@@ -960,20 +1463,105 @@ export interface AggregateUserSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TransactionsEdge {
+  node: Transactions;
+  cursor: String;
+}
+
+export interface TransactionsEdgePromise
+  extends Promise<TransactionsEdge>,
+    Fragmentable {
+  node: <T = TransactionsPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TransactionsEdgeSubscription
+  extends Promise<AsyncIterator<TransactionsEdge>>,
+    Fragmentable {
+  node: <T = TransactionsSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TokenSubscriptionPayload {
+  mutation: MutationType;
+  node: Token;
+  updatedFields: String[];
+  previousValues: TokenPreviousValues;
+}
+
+export interface TokenSubscriptionPayloadPromise
+  extends Promise<TokenSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TokenPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TokenPreviousValuesPromise>() => T;
+}
+
+export interface TokenSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TokenSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TokenSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TokenPreviousValuesSubscription>() => T;
+}
+
+export interface TokenEdge {
+  node: Token;
+  cursor: String;
+}
+
+export interface TokenEdgePromise extends Promise<TokenEdge>, Fragmentable {
+  node: <T = TokenPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TokenEdgeSubscription
+  extends Promise<AsyncIterator<TokenEdge>>,
+    Fragmentable {
+  node: <T = TokenSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface MomentEdge {
+  node: Moment;
+  cursor: String;
+}
+
+export interface MomentEdgePromise extends Promise<MomentEdge>, Fragmentable {
+  node: <T = MomentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface MomentEdgeSubscription
+  extends Promise<AsyncIterator<MomentEdge>>,
+    Fragmentable {
+  node: <T = MomentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface TransactionsPreviousValues {
@@ -1001,77 +1589,121 @@ export interface TransactionsPreviousValuesSubscription
   type: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
+export interface TransactionsSubscriptionPayload {
+  mutation: MutationType;
+  node: Transactions;
+  updatedFields: String[];
+  previousValues: TransactionsPreviousValues;
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface TransactionsSubscriptionPayloadPromise
+  extends Promise<TransactionsSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TransactionsPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TransactionsPreviousValuesPromise>() => T;
+}
+
+export interface TransactionsSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TransactionsSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TransactionsSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TransactionsPreviousValuesSubscription>() => T;
+}
+
+export interface FollowConnection {
+  pageInfo: PageInfo;
+  edges: FollowEdge[];
+}
+
+export interface FollowConnectionPromise
+  extends Promise<FollowConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<FollowEdge>>() => T;
+  aggregate: <T = AggregateFollowPromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface FollowConnectionSubscription
+  extends Promise<AsyncIterator<FollowConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<FollowEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateFollowSubscription>() => T;
 }
 
-export interface AggregateFollow {
-  count: Int;
+export interface TokenPreviousValues {
+  tokenID: ID_Output;
+  tokenName: String;
+  isCopycat: String;
 }
 
-export interface AggregateFollowPromise
-  extends Promise<AggregateFollow>,
+export interface TokenPreviousValuesPromise
+  extends Promise<TokenPreviousValues>,
     Fragmentable {
-  count: () => Promise<Int>;
+  tokenID: () => Promise<ID_Output>;
+  tokenName: () => Promise<String>;
+  isCopycat: () => Promise<String>;
 }
 
-export interface AggregateFollowSubscription
-  extends Promise<AsyncIterator<AggregateFollow>>,
+export interface TokenPreviousValuesSubscription
+  extends Promise<AsyncIterator<TokenPreviousValues>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  tokenID: () => Promise<AsyncIterator<ID_Output>>;
+  tokenName: () => Promise<AsyncIterator<String>>;
+  isCopycat: () => Promise<AsyncIterator<String>>;
 }
 
-export interface TransactionsEdge {
-  node: Transactions;
-  cursor: String;
+export interface rateConnection {
+  pageInfo: PageInfo;
+  edges: rateEdge[];
 }
 
-export interface TransactionsEdgePromise
-  extends Promise<TransactionsEdge>,
+export interface rateConnectionPromise
+  extends Promise<rateConnection>,
     Fragmentable {
-  node: <T = TransactionsPromise>() => T;
-  cursor: () => Promise<String>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<rateEdge>>() => T;
+  aggregate: <T = AggregateratePromise>() => T;
 }
 
-export interface TransactionsEdgeSubscription
-  extends Promise<AsyncIterator<TransactionsEdge>>,
+export interface rateConnectionSubscription
+  extends Promise<AsyncIterator<rateConnection>>,
     Fragmentable {
-  node: <T = TransactionsSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<rateEdgeSubscription>>>() => T;
+  aggregate: <T = AggregaterateSubscription>() => T;
 }
 
-export interface FollowEdge {
-  node: Follow;
-  cursor: String;
+export interface Token {
+  tokenID: ID_Output;
+  tokenName: String;
+  isCopycat: String;
 }
 
-export interface FollowEdgePromise extends Promise<FollowEdge>, Fragmentable {
-  node: <T = FollowPromise>() => T;
-  cursor: () => Promise<String>;
+export interface TokenPromise extends Promise<Token>, Fragmentable {
+  tokenID: () => Promise<ID_Output>;
+  tokenName: () => Promise<String>;
+  isCopycat: () => Promise<String>;
 }
 
-export interface FollowEdgeSubscription
-  extends Promise<AsyncIterator<FollowEdge>>,
+export interface TokenSubscription
+  extends Promise<AsyncIterator<Token>>,
     Fragmentable {
-  node: <T = FollowSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  tokenID: () => Promise<AsyncIterator<ID_Output>>;
+  tokenName: () => Promise<AsyncIterator<String>>;
+  isCopycat: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TokenNullablePromise
+  extends Promise<Token | null>,
+    Fragmentable {
+  tokenID: () => Promise<ID_Output>;
+  tokenName: () => Promise<String>;
+  isCopycat: () => Promise<String>;
 }
 
 export interface Transactions {
@@ -1108,426 +1740,25 @@ export interface TransactionsNullablePromise
   type: () => Promise<String>;
 }
 
-export interface TransactionsSubscriptionPayload {
-  mutation: MutationType;
-  node: Transactions;
-  updatedFields: String[];
-  previousValues: TransactionsPreviousValues;
-}
-
-export interface TransactionsSubscriptionPayloadPromise
-  extends Promise<TransactionsSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = TransactionsPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TransactionsPreviousValuesPromise>() => T;
-}
-
-export interface TransactionsSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TransactionsSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TransactionsSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TransactionsPreviousValuesSubscription>() => T;
-}
-
-export interface TokenEdge {
-  node: Token;
-  cursor: String;
-}
-
-export interface TokenEdgePromise extends Promise<TokenEdge>, Fragmentable {
-  node: <T = TokenPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface TokenEdgeSubscription
-  extends Promise<AsyncIterator<TokenEdge>>,
-    Fragmentable {
-  node: <T = TokenSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface FollowSubscriptionPayload {
-  mutation: MutationType;
-  node: Follow;
-  updatedFields: String[];
-  previousValues: FollowPreviousValues;
-}
-
-export interface FollowSubscriptionPayloadPromise
-  extends Promise<FollowSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = FollowPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = FollowPreviousValuesPromise>() => T;
-}
-
-export interface FollowSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<FollowSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = FollowSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = FollowPreviousValuesSubscription>() => T;
-}
-
-export interface Token {
-  tokenID: ID_Output;
-  tokenName: String;
-  isCopycat: String;
-}
-
-export interface TokenPromise extends Promise<Token>, Fragmentable {
-  tokenID: () => Promise<ID_Output>;
-  tokenName: () => Promise<String>;
-  isCopycat: () => Promise<String>;
-}
-
-export interface TokenSubscription
-  extends Promise<AsyncIterator<Token>>,
-    Fragmentable {
-  tokenID: () => Promise<AsyncIterator<ID_Output>>;
-  tokenName: () => Promise<AsyncIterator<String>>;
-  isCopycat: () => Promise<AsyncIterator<String>>;
-}
-
-export interface TokenNullablePromise
-  extends Promise<Token | null>,
-    Fragmentable {
-  tokenID: () => Promise<ID_Output>;
-  tokenName: () => Promise<String>;
-  isCopycat: () => Promise<String>;
-}
-
-export interface FollowPreviousValues {
-  follower: String;
-  leader: String;
-}
-
-export interface FollowPreviousValuesPromise
-  extends Promise<FollowPreviousValues>,
-    Fragmentable {
-  follower: () => Promise<String>;
-  leader: () => Promise<String>;
-}
-
-export interface FollowPreviousValuesSubscription
-  extends Promise<AsyncIterator<FollowPreviousValues>>,
-    Fragmentable {
-  follower: () => Promise<AsyncIterator<String>>;
-  leader: () => Promise<AsyncIterator<String>>;
-}
-
-export interface MomentEdge {
-  node: Moment;
-  cursor: String;
-}
-
-export interface MomentEdgePromise extends Promise<MomentEdge>, Fragmentable {
-  node: <T = MomentPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface MomentEdgeSubscription
-  extends Promise<AsyncIterator<MomentEdge>>,
-    Fragmentable {
-  node: <T = MomentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface MomentSubscriptionPayload {
-  mutation: MutationType;
-  node: Moment;
-  updatedFields: String[];
-  previousValues: MomentPreviousValues;
-}
-
-export interface MomentSubscriptionPayloadPromise
-  extends Promise<MomentSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = MomentPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = MomentPreviousValuesPromise>() => T;
-}
-
-export interface MomentSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<MomentSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = MomentSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = MomentPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateTransactions {
-  count: Int;
-}
-
-export interface AggregateTransactionsPromise
-  extends Promise<AggregateTransactions>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTransactionsSubscription
-  extends Promise<AsyncIterator<AggregateTransactions>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateToken {
-  count: Int;
-}
-
-export interface AggregateTokenPromise
-  extends Promise<AggregateToken>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTokenSubscription
-  extends Promise<AsyncIterator<AggregateToken>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TokenPreviousValues {
-  tokenID: ID_Output;
-  tokenName: String;
-  isCopycat: String;
-}
-
-export interface TokenPreviousValuesPromise
-  extends Promise<TokenPreviousValues>,
-    Fragmentable {
-  tokenID: () => Promise<ID_Output>;
-  tokenName: () => Promise<String>;
-  isCopycat: () => Promise<String>;
-}
-
-export interface TokenPreviousValuesSubscription
-  extends Promise<AsyncIterator<TokenPreviousValues>>,
-    Fragmentable {
-  tokenID: () => Promise<AsyncIterator<ID_Output>>;
-  tokenName: () => Promise<AsyncIterator<String>>;
-  isCopycat: () => Promise<AsyncIterator<String>>;
-}
-
-export interface TokenSubscriptionPayload {
-  mutation: MutationType;
-  node: Token;
-  updatedFields: String[];
-  previousValues: TokenPreviousValues;
-}
-
-export interface TokenSubscriptionPayloadPromise
-  extends Promise<TokenSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = TokenPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TokenPreviousValuesPromise>() => T;
-}
-
-export interface TokenSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TokenSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TokenSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TokenPreviousValuesSubscription>() => T;
-}
-
-export interface FollowConnection {
+export interface UserConnection {
   pageInfo: PageInfo;
-  edges: FollowEdge[];
+  edges: UserEdge[];
 }
 
-export interface FollowConnectionPromise
-  extends Promise<FollowConnection>,
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<FollowEdge>>() => T;
-  aggregate: <T = AggregateFollowPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
-export interface FollowConnectionSubscription
-  extends Promise<AsyncIterator<FollowConnection>>,
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<FollowEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateFollowSubscription>() => T;
-}
-
-export interface MomentPreviousValues {
-  createdAt: DateTimeOutput;
-  title?: String;
-  content?: String;
-}
-
-export interface MomentPreviousValuesPromise
-  extends Promise<MomentPreviousValues>,
-    Fragmentable {
-  createdAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
-}
-
-export interface MomentPreviousValuesSubscription
-  extends Promise<AsyncIterator<MomentPreviousValues>>,
-    Fragmentable {
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-}
-
-export interface TokenConnection {
-  pageInfo: PageInfo;
-  edges: TokenEdge[];
-}
-
-export interface TokenConnectionPromise
-  extends Promise<TokenConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TokenEdge>>() => T;
-  aggregate: <T = AggregateTokenPromise>() => T;
-}
-
-export interface TokenConnectionSubscription
-  extends Promise<AsyncIterator<TokenConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TokenEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTokenSubscription>() => T;
-}
-
-export interface TransactionsConnection {
-  pageInfo: PageInfo;
-  edges: TransactionsEdge[];
-}
-
-export interface TransactionsConnectionPromise
-  extends Promise<TransactionsConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TransactionsEdge>>() => T;
-  aggregate: <T = AggregateTransactionsPromise>() => T;
-}
-
-export interface TransactionsConnectionSubscription
-  extends Promise<AsyncIterator<TransactionsConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TransactionsEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTransactionsSubscription>() => T;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface MomentConnection {
-  pageInfo: PageInfo;
-  edges: MomentEdge[];
-}
-
-export interface MomentConnectionPromise
-  extends Promise<MomentConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<MomentEdge>>() => T;
-  aggregate: <T = AggregateMomentPromise>() => T;
-}
-
-export interface MomentConnectionSubscription
-  extends Promise<AsyncIterator<MomentConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<MomentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateMomentSubscription>() => T;
-}
-
-export interface AggregateMoment {
-  count: Int;
-}
-
-export interface AggregateMomentPromise
-  extends Promise<AggregateMoment>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateMomentSubscription
-  extends Promise<AsyncIterator<AggregateMoment>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 /*
@@ -1586,6 +1817,10 @@ export const models: Model[] = [
   },
   {
     name: "Moment",
+    embedded: false
+  },
+  {
+    name: "rate",
     embedded: false
   }
 ];

@@ -35,3 +35,8 @@ type Moment {
 	title: String
 	content: String
 }
+
+type rate {
+	key: String @unique
+	value: String
+}

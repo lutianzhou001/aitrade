@@ -11,6 +11,10 @@ type AggregateMoment {
   count: Int!
 }
 
+type Aggregaterate {
+  count: Int!
+}
+
 type AggregateToken {
   count: Int!
 }
@@ -275,6 +279,12 @@ type Mutation {
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createrate(data: rateCreateInput!): rate!
+  updaterate(data: rateUpdateInput!, where: rateWhereUniqueInput!): rate
+  updateManyrates(data: rateUpdateManyMutationInput!, where: rateWhereInput): BatchPayload!
+  upsertrate(where: rateWhereUniqueInput!, create: rateCreateInput!, update: rateUpdateInput!): rate!
+  deleterate(where: rateWhereUniqueInput!): rate
+  deleteManyrates(where: rateWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -307,7 +317,109 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  rate(where: rateWhereUniqueInput!): rate
+  rates(where: rateWhereInput, orderBy: rateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [rate]!
+  ratesConnection(where: rateWhereInput, orderBy: rateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): rateConnection!
   node(id: ID!): Node
+}
+
+type rate {
+  key: String
+  value: String
+}
+
+type rateConnection {
+  pageInfo: PageInfo!
+  edges: [rateEdge]!
+  aggregate: Aggregaterate!
+}
+
+input rateCreateInput {
+  key: String
+  value: String
+}
+
+type rateEdge {
+  node: rate!
+  cursor: String!
+}
+
+enum rateOrderByInput {
+  key_ASC
+  key_DESC
+  value_ASC
+  value_DESC
+}
+
+type ratePreviousValues {
+  key: String
+  value: String
+}
+
+type rateSubscriptionPayload {
+  mutation: MutationType!
+  node: rate
+  updatedFields: [String!]
+  previousValues: ratePreviousValues
+}
+
+input rateSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: rateWhereInput
+  AND: [rateSubscriptionWhereInput!]
+  OR: [rateSubscriptionWhereInput!]
+  NOT: [rateSubscriptionWhereInput!]
+}
+
+input rateUpdateInput {
+  key: String
+  value: String
+}
+
+input rateUpdateManyMutationInput {
+  key: String
+  value: String
+}
+
+input rateWhereInput {
+  key: String
+  key_not: String
+  key_in: [String!]
+  key_not_in: [String!]
+  key_lt: String
+  key_lte: String
+  key_gt: String
+  key_gte: String
+  key_contains: String
+  key_not_contains: String
+  key_starts_with: String
+  key_not_starts_with: String
+  key_ends_with: String
+  key_not_ends_with: String
+  value: String
+  value_not: String
+  value_in: [String!]
+  value_not_in: [String!]
+  value_lt: String
+  value_lte: String
+  value_gt: String
+  value_gte: String
+  value_contains: String
+  value_not_contains: String
+  value_starts_with: String
+  value_not_starts_with: String
+  value_ends_with: String
+  value_not_ends_with: String
+  AND: [rateWhereInput!]
+  OR: [rateWhereInput!]
+  NOT: [rateWhereInput!]
+}
+
+input rateWhereUniqueInput {
+  key: String
 }
 
 type Subscription {
@@ -316,6 +428,7 @@ type Subscription {
   token(where: TokenSubscriptionWhereInput): TokenSubscriptionPayload
   transactions(where: TransactionsSubscriptionWhereInput): TransactionsSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  rate(where: rateSubscriptionWhereInput): rateSubscriptionPayload
 }
 
 type Token {
