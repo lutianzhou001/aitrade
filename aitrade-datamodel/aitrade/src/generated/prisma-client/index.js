@@ -27,6 +27,22 @@ var models = [
   {
     name: "rate",
     embedded: false
+  },
+  {
+    name: "onchain",
+    embedded: false
+  },
+  {
+    name: "margincloseout",
+    embedded: false
+  },
+  {
+    name: "contract",
+    embedded: false
+  },
+  {
+    name: "KOL",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

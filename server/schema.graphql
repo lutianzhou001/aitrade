@@ -6,9 +6,8 @@ type Query {
   getUsers(skip: Int, first: Int): getUsersPayload
   getFollowers(skip: Int, first: Int): getFollowersPayload
   getAttentions(skip: Int, first: Int): getAttentionsPayload
-
   getMoments(skip: Int, first: Int, UID: String): getMomentsPayload
-
+  getCloseout(skip: Int, first: Int): [getCloseoutPayload]
   getWalletInfo: getWalletInfoPayload
 }
 
@@ -24,6 +23,17 @@ type Mutation {
   attentionTo(UID:String!): attentionToPayload
 
   createMoment(title:String, content:String): createMomentPayload
+}
+
+type getCloseoutPayload {
+	timestamp: Int
+	exchange: String
+	contract_name: String
+	contract_type: String
+	closeout_type: String
+  contract_price: String
+	amount: String
+	price: String
 }
 
 type loginPayload {

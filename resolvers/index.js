@@ -4,16 +4,18 @@ const { follow } = require('./mutation/follow');
 const { moment } = require('./mutation/moment');
 const { users } = require('./query/query');
 const { okex } = require('./query/okex');
+const { bigdata } = require('./query/bigdata')
 
 module.exports = {
   Query: {
     ...users,
-    ...okex
+    ...okex,
+    ...bigdata,
   },
   Mutation: {
     ...auth,
     ...profile,
     ...follow,
-    ...moment
+    ...moment,
   }
 };

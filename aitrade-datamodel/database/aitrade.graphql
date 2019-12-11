@@ -41,6 +41,37 @@ type rate {
 	value: String
 }
 
+type mycoin {
+	coin_name: String!
+	coin_price: Float!
+}
+
+type battle {
+	longOKex: Int
+	shortOKex: Int
+	longHuobi: Int
+	shortHuobi: Int
+	longBitMex: Int
+	shortBitMex: Int
+}
+
+type onchainexchange {
+    btc: Int
+	eth: Int
+	usdt: Int
+}
+
+type btcplaceorder {
+	long: Int
+	deal: Int
+	dealAmount: Int
+}
+
+type distrubution {
+	ups: Int
+	downs: Int
+}
+
 type onchain {
 	from : String!
 	to: String!
@@ -56,14 +87,11 @@ type margincloseout {
 	closeout_type: String!
     contract_price: String!
 	amount: String!
-}
-
-type contract {
-	long: Int!
-	short: Int!
+	price: Float!
 }
 
 type KOL {
 	long: Int!
 	short: Int!
 }
+
