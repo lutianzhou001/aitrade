@@ -99,6 +99,76 @@ const profile = {
                 errMessage: err.errMessage
             }
         }
+    },
+
+    async changeSubscribeCost(parent, args, ctx, info) {
+        try {
+            //第一步要解token
+            const userId = getUserId(ctx);
+            const users = await ctx.prisma.users({ where: { id: userId } });
+            if (!users) {
+                throw new Error("cannot find this user")
+            } else {
+                const changenickName = await ctx.prisma.updateUser({
+                    data: {
+                        subscribeCost: args.cost
+                    },
+                    where: {
+                        id: userId
+                    }
+                });
+                if (changenickName) {
+                    return {
+                        isSuccess: true,
+                        errMessage: null
+                    }
+                }
+            }
+        } catch (err) {
+            return {
+                isSuccess: false,
+                errMessage: err.errMessage
+            }
+        }
+    },
+
+    async changeSetting(parent, args, ctx, info) {
+        try {
+            const userId = getUserId(ctx);
+            if (!userId) {
+                throw new Error("验证令牌已过期")
+            }
+            let updateData = {};
+            if (args.assetsSetting) {
+                updateData.assetsSetting = args.assetsSetting
+            }
+            if (args.positionSetting) {
+                updateData.positionSetting = args.positionSetting
+            }
+            if (args.actionSetting) {
+                updateData.actionSetting = args.actionSetting
+            }
+            let setting = await ctx.prisma.updateUser({
+                where:{
+                    id:userId
+                },
+                data:{
+                    setting:{
+                        update:updateData
+                    }
+                }});
+            if (setting) {
+                return {
+                    isSuccess: true,
+                    errMessage: null
+                }
+            }
+        } catch (err) {
+            return {
+                isSuccess: false,
+                errMessage: err.errMessage
+            }
+        }
     }
 };
 

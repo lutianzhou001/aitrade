@@ -9,11 +9,23 @@ var models = [
     embedded: false
   },
   {
+    name: "Setting",
+    embedded: false
+  },
+  {
+    name: "Wallet",
+    embedded: false
+  },
+  {
     name: "Token",
     embedded: false
   },
   {
     name: "Follow",
+    embedded: false
+  },
+  {
+    name: "Subscribe",
     embedded: false
   },
   {
@@ -25,7 +37,35 @@ var models = [
     embedded: false
   },
   {
-    name: "rate",
+    name: "Rate",
+    embedded: false
+  },
+  {
+    name: "Mycoin",
+    embedded: false
+  },
+  {
+    name: "Battle",
+    embedded: false
+  },
+  {
+    name: "OnchainExchange",
+    embedded: false
+  },
+  {
+    name: "BtcPlaceOrder",
+    embedded: false
+  },
+  {
+    name: "Distribution",
+    embedded: false
+  },
+  {
+    name: "Onchain",
+    embedded: false
+  },
+  {
+    name: "Closeout",
     embedded: false
   }
 ];

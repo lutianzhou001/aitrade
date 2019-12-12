@@ -3,7 +3,23 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateFollow {
+/* GraphQL */ `type AggregateBattle {
+  count: Int!
+}
+
+type AggregateBtcPlaceOrder {
+  count: Int!
+}
+
+type AggregateCloseout {
+  count: Int!
+}
+
+type AggregateDistribution {
+  count: Int!
+}
+
+type AggregateFollow {
   count: Int!
 }
 
@@ -11,7 +27,27 @@ type AggregateMoment {
   count: Int!
 }
 
-type Aggregaterate {
+type AggregateMycoin {
+  count: Int!
+}
+
+type AggregateOnchain {
+  count: Int!
+}
+
+type AggregateOnchainExchange {
+  count: Int!
+}
+
+type AggregateRate {
+  count: Int!
+}
+
+type AggregateSetting {
+  count: Int!
+}
+
+type AggregateSubscribe {
   count: Int!
 }
 
@@ -27,11 +63,545 @@ type AggregateUser {
   count: Int!
 }
 
+type AggregateWallet {
+  count: Int!
+}
+
 type BatchPayload {
   count: Long!
 }
 
+type Battle {
+  longOKex: Int
+  shortOKex: Int
+  longHuobi: Int
+  shortHuobi: Int
+  longBitMex: Int
+  shortBitMex: Int
+}
+
+type BattleConnection {
+  pageInfo: PageInfo!
+  edges: [BattleEdge]!
+  aggregate: AggregateBattle!
+}
+
+input BattleCreateInput {
+  longOKex: Int
+  shortOKex: Int
+  longHuobi: Int
+  shortHuobi: Int
+  longBitMex: Int
+  shortBitMex: Int
+}
+
+type BattleEdge {
+  node: Battle!
+  cursor: String!
+}
+
+enum BattleOrderByInput {
+  longOKex_ASC
+  longOKex_DESC
+  shortOKex_ASC
+  shortOKex_DESC
+  longHuobi_ASC
+  longHuobi_DESC
+  shortHuobi_ASC
+  shortHuobi_DESC
+  longBitMex_ASC
+  longBitMex_DESC
+  shortBitMex_ASC
+  shortBitMex_DESC
+}
+
+type BattlePreviousValues {
+  longOKex: Int
+  shortOKex: Int
+  longHuobi: Int
+  shortHuobi: Int
+  longBitMex: Int
+  shortBitMex: Int
+}
+
+type BattleSubscriptionPayload {
+  mutation: MutationType!
+  node: Battle
+  updatedFields: [String!]
+  previousValues: BattlePreviousValues
+}
+
+input BattleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BattleWhereInput
+  AND: [BattleSubscriptionWhereInput!]
+  OR: [BattleSubscriptionWhereInput!]
+  NOT: [BattleSubscriptionWhereInput!]
+}
+
+input BattleUpdateManyMutationInput {
+  longOKex: Int
+  shortOKex: Int
+  longHuobi: Int
+  shortHuobi: Int
+  longBitMex: Int
+  shortBitMex: Int
+}
+
+input BattleWhereInput {
+  longOKex: Int
+  longOKex_not: Int
+  longOKex_in: [Int!]
+  longOKex_not_in: [Int!]
+  longOKex_lt: Int
+  longOKex_lte: Int
+  longOKex_gt: Int
+  longOKex_gte: Int
+  shortOKex: Int
+  shortOKex_not: Int
+  shortOKex_in: [Int!]
+  shortOKex_not_in: [Int!]
+  shortOKex_lt: Int
+  shortOKex_lte: Int
+  shortOKex_gt: Int
+  shortOKex_gte: Int
+  longHuobi: Int
+  longHuobi_not: Int
+  longHuobi_in: [Int!]
+  longHuobi_not_in: [Int!]
+  longHuobi_lt: Int
+  longHuobi_lte: Int
+  longHuobi_gt: Int
+  longHuobi_gte: Int
+  shortHuobi: Int
+  shortHuobi_not: Int
+  shortHuobi_in: [Int!]
+  shortHuobi_not_in: [Int!]
+  shortHuobi_lt: Int
+  shortHuobi_lte: Int
+  shortHuobi_gt: Int
+  shortHuobi_gte: Int
+  longBitMex: Int
+  longBitMex_not: Int
+  longBitMex_in: [Int!]
+  longBitMex_not_in: [Int!]
+  longBitMex_lt: Int
+  longBitMex_lte: Int
+  longBitMex_gt: Int
+  longBitMex_gte: Int
+  shortBitMex: Int
+  shortBitMex_not: Int
+  shortBitMex_in: [Int!]
+  shortBitMex_not_in: [Int!]
+  shortBitMex_lt: Int
+  shortBitMex_lte: Int
+  shortBitMex_gt: Int
+  shortBitMex_gte: Int
+  AND: [BattleWhereInput!]
+  OR: [BattleWhereInput!]
+  NOT: [BattleWhereInput!]
+}
+
+type BtcPlaceOrder {
+  long: Int
+  longDeal: Int
+  longDealAmount: Int
+  short: Int
+  shortDeal: Int
+  shortDealAmount: Int
+}
+
+type BtcPlaceOrderConnection {
+  pageInfo: PageInfo!
+  edges: [BtcPlaceOrderEdge]!
+  aggregate: AggregateBtcPlaceOrder!
+}
+
+input BtcPlaceOrderCreateInput {
+  long: Int
+  longDeal: Int
+  longDealAmount: Int
+  short: Int
+  shortDeal: Int
+  shortDealAmount: Int
+}
+
+type BtcPlaceOrderEdge {
+  node: BtcPlaceOrder!
+  cursor: String!
+}
+
+enum BtcPlaceOrderOrderByInput {
+  long_ASC
+  long_DESC
+  longDeal_ASC
+  longDeal_DESC
+  longDealAmount_ASC
+  longDealAmount_DESC
+  short_ASC
+  short_DESC
+  shortDeal_ASC
+  shortDeal_DESC
+  shortDealAmount_ASC
+  shortDealAmount_DESC
+}
+
+type BtcPlaceOrderPreviousValues {
+  long: Int
+  longDeal: Int
+  longDealAmount: Int
+  short: Int
+  shortDeal: Int
+  shortDealAmount: Int
+}
+
+type BtcPlaceOrderSubscriptionPayload {
+  mutation: MutationType!
+  node: BtcPlaceOrder
+  updatedFields: [String!]
+  previousValues: BtcPlaceOrderPreviousValues
+}
+
+input BtcPlaceOrderSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BtcPlaceOrderWhereInput
+  AND: [BtcPlaceOrderSubscriptionWhereInput!]
+  OR: [BtcPlaceOrderSubscriptionWhereInput!]
+  NOT: [BtcPlaceOrderSubscriptionWhereInput!]
+}
+
+input BtcPlaceOrderUpdateManyMutationInput {
+  long: Int
+  longDeal: Int
+  longDealAmount: Int
+  short: Int
+  shortDeal: Int
+  shortDealAmount: Int
+}
+
+input BtcPlaceOrderWhereInput {
+  long: Int
+  long_not: Int
+  long_in: [Int!]
+  long_not_in: [Int!]
+  long_lt: Int
+  long_lte: Int
+  long_gt: Int
+  long_gte: Int
+  longDeal: Int
+  longDeal_not: Int
+  longDeal_in: [Int!]
+  longDeal_not_in: [Int!]
+  longDeal_lt: Int
+  longDeal_lte: Int
+  longDeal_gt: Int
+  longDeal_gte: Int
+  longDealAmount: Int
+  longDealAmount_not: Int
+  longDealAmount_in: [Int!]
+  longDealAmount_not_in: [Int!]
+  longDealAmount_lt: Int
+  longDealAmount_lte: Int
+  longDealAmount_gt: Int
+  longDealAmount_gte: Int
+  short: Int
+  short_not: Int
+  short_in: [Int!]
+  short_not_in: [Int!]
+  short_lt: Int
+  short_lte: Int
+  short_gt: Int
+  short_gte: Int
+  shortDeal: Int
+  shortDeal_not: Int
+  shortDeal_in: [Int!]
+  shortDeal_not_in: [Int!]
+  shortDeal_lt: Int
+  shortDeal_lte: Int
+  shortDeal_gt: Int
+  shortDeal_gte: Int
+  shortDealAmount: Int
+  shortDealAmount_not: Int
+  shortDealAmount_in: [Int!]
+  shortDealAmount_not_in: [Int!]
+  shortDealAmount_lt: Int
+  shortDealAmount_lte: Int
+  shortDealAmount_gt: Int
+  shortDealAmount_gte: Int
+  AND: [BtcPlaceOrderWhereInput!]
+  OR: [BtcPlaceOrderWhereInput!]
+  NOT: [BtcPlaceOrderWhereInput!]
+}
+
+type Closeout {
+  exchange: String!
+  instrument_id: String!
+  status: String!
+  limit: String!
+  from: String!
+  to: String!
+  price: Float!
+}
+
+type CloseoutConnection {
+  pageInfo: PageInfo!
+  edges: [CloseoutEdge]!
+  aggregate: AggregateCloseout!
+}
+
+input CloseoutCreateInput {
+  exchange: String!
+  instrument_id: String!
+  status: String!
+  limit: String!
+  from: String!
+  to: String!
+  price: Float!
+}
+
+type CloseoutEdge {
+  node: Closeout!
+  cursor: String!
+}
+
+enum CloseoutOrderByInput {
+  exchange_ASC
+  exchange_DESC
+  instrument_id_ASC
+  instrument_id_DESC
+  status_ASC
+  status_DESC
+  limit_ASC
+  limit_DESC
+  from_ASC
+  from_DESC
+  to_ASC
+  to_DESC
+  price_ASC
+  price_DESC
+}
+
+type CloseoutPreviousValues {
+  exchange: String!
+  instrument_id: String!
+  status: String!
+  limit: String!
+  from: String!
+  to: String!
+  price: Float!
+}
+
+type CloseoutSubscriptionPayload {
+  mutation: MutationType!
+  node: Closeout
+  updatedFields: [String!]
+  previousValues: CloseoutPreviousValues
+}
+
+input CloseoutSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CloseoutWhereInput
+  AND: [CloseoutSubscriptionWhereInput!]
+  OR: [CloseoutSubscriptionWhereInput!]
+  NOT: [CloseoutSubscriptionWhereInput!]
+}
+
+input CloseoutUpdateManyMutationInput {
+  exchange: String
+  instrument_id: String
+  status: String
+  limit: String
+  from: String
+  to: String
+  price: Float
+}
+
+input CloseoutWhereInput {
+  exchange: String
+  exchange_not: String
+  exchange_in: [String!]
+  exchange_not_in: [String!]
+  exchange_lt: String
+  exchange_lte: String
+  exchange_gt: String
+  exchange_gte: String
+  exchange_contains: String
+  exchange_not_contains: String
+  exchange_starts_with: String
+  exchange_not_starts_with: String
+  exchange_ends_with: String
+  exchange_not_ends_with: String
+  instrument_id: String
+  instrument_id_not: String
+  instrument_id_in: [String!]
+  instrument_id_not_in: [String!]
+  instrument_id_lt: String
+  instrument_id_lte: String
+  instrument_id_gt: String
+  instrument_id_gte: String
+  instrument_id_contains: String
+  instrument_id_not_contains: String
+  instrument_id_starts_with: String
+  instrument_id_not_starts_with: String
+  instrument_id_ends_with: String
+  instrument_id_not_ends_with: String
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  limit: String
+  limit_not: String
+  limit_in: [String!]
+  limit_not_in: [String!]
+  limit_lt: String
+  limit_lte: String
+  limit_gt: String
+  limit_gte: String
+  limit_contains: String
+  limit_not_contains: String
+  limit_starts_with: String
+  limit_not_starts_with: String
+  limit_ends_with: String
+  limit_not_ends_with: String
+  from: String
+  from_not: String
+  from_in: [String!]
+  from_not_in: [String!]
+  from_lt: String
+  from_lte: String
+  from_gt: String
+  from_gte: String
+  from_contains: String
+  from_not_contains: String
+  from_starts_with: String
+  from_not_starts_with: String
+  from_ends_with: String
+  from_not_ends_with: String
+  to: String
+  to_not: String
+  to_in: [String!]
+  to_not_in: [String!]
+  to_lt: String
+  to_lte: String
+  to_gt: String
+  to_gte: String
+  to_contains: String
+  to_not_contains: String
+  to_starts_with: String
+  to_not_starts_with: String
+  to_ends_with: String
+  to_not_ends_with: String
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
+  AND: [CloseoutWhereInput!]
+  OR: [CloseoutWhereInput!]
+  NOT: [CloseoutWhereInput!]
+}
+
 scalar DateTime
+
+type Distribution {
+  arrange: Int
+  count: Int
+}
+
+type DistributionConnection {
+  pageInfo: PageInfo!
+  edges: [DistributionEdge]!
+  aggregate: AggregateDistribution!
+}
+
+input DistributionCreateInput {
+  arrange: Int
+  count: Int
+}
+
+type DistributionEdge {
+  node: Distribution!
+  cursor: String!
+}
+
+enum DistributionOrderByInput {
+  arrange_ASC
+  arrange_DESC
+  count_ASC
+  count_DESC
+}
+
+type DistributionPreviousValues {
+  arrange: Int
+  count: Int
+}
+
+type DistributionSubscriptionPayload {
+  mutation: MutationType!
+  node: Distribution
+  updatedFields: [String!]
+  previousValues: DistributionPreviousValues
+}
+
+input DistributionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: DistributionWhereInput
+  AND: [DistributionSubscriptionWhereInput!]
+  OR: [DistributionSubscriptionWhereInput!]
+  NOT: [DistributionSubscriptionWhereInput!]
+}
+
+input DistributionUpdateManyMutationInput {
+  arrange: Int
+  count: Int
+}
+
+input DistributionWhereInput {
+  arrange: Int
+  arrange_not: Int
+  arrange_in: [Int!]
+  arrange_not_in: [Int!]
+  arrange_lt: Int
+  arrange_lte: Int
+  arrange_gt: Int
+  arrange_gte: Int
+  count: Int
+  count_not: Int
+  count_in: [Int!]
+  count_not_in: [Int!]
+  count_lt: Int
+  count_lte: Int
+  count_gt: Int
+  count_gte: Int
+  AND: [DistributionWhereInput!]
+  OR: [DistributionWhereInput!]
+  NOT: [DistributionWhereInput!]
+}
 
 type Follow {
   follower: String!
@@ -258,12 +828,45 @@ input MomentWhereInput {
 }
 
 type Mutation {
+  createBattle(data: BattleCreateInput!): Battle!
+  updateManyBattles(data: BattleUpdateManyMutationInput!, where: BattleWhereInput): BatchPayload!
+  deleteManyBattles(where: BattleWhereInput): BatchPayload!
+  createBtcPlaceOrder(data: BtcPlaceOrderCreateInput!): BtcPlaceOrder!
+  updateManyBtcPlaceOrders(data: BtcPlaceOrderUpdateManyMutationInput!, where: BtcPlaceOrderWhereInput): BatchPayload!
+  deleteManyBtcPlaceOrders(where: BtcPlaceOrderWhereInput): BatchPayload!
+  createCloseout(data: CloseoutCreateInput!): Closeout!
+  updateManyCloseouts(data: CloseoutUpdateManyMutationInput!, where: CloseoutWhereInput): BatchPayload!
+  deleteManyCloseouts(where: CloseoutWhereInput): BatchPayload!
+  createDistribution(data: DistributionCreateInput!): Distribution!
+  updateManyDistributions(data: DistributionUpdateManyMutationInput!, where: DistributionWhereInput): BatchPayload!
+  deleteManyDistributions(where: DistributionWhereInput): BatchPayload!
   createFollow(data: FollowCreateInput!): Follow!
   updateManyFollows(data: FollowUpdateManyMutationInput!, where: FollowWhereInput): BatchPayload!
   deleteManyFollows(where: FollowWhereInput): BatchPayload!
   createMoment(data: MomentCreateInput!): Moment!
   updateManyMoments(data: MomentUpdateManyMutationInput!, where: MomentWhereInput): BatchPayload!
   deleteManyMoments(where: MomentWhereInput): BatchPayload!
+  createMycoin(data: MycoinCreateInput!): Mycoin!
+  updateManyMycoins(data: MycoinUpdateManyMutationInput!, where: MycoinWhereInput): BatchPayload!
+  deleteManyMycoins(where: MycoinWhereInput): BatchPayload!
+  createOnchain(data: OnchainCreateInput!): Onchain!
+  updateManyOnchains(data: OnchainUpdateManyMutationInput!, where: OnchainWhereInput): BatchPayload!
+  deleteManyOnchains(where: OnchainWhereInput): BatchPayload!
+  createOnchainExchange(data: OnchainExchangeCreateInput!): OnchainExchange!
+  updateManyOnchainExchanges(data: OnchainExchangeUpdateManyMutationInput!, where: OnchainExchangeWhereInput): BatchPayload!
+  deleteManyOnchainExchanges(where: OnchainExchangeWhereInput): BatchPayload!
+  createRate(data: RateCreateInput!): Rate!
+  updateRate(data: RateUpdateInput!, where: RateWhereUniqueInput!): Rate
+  updateManyRates(data: RateUpdateManyMutationInput!, where: RateWhereInput): BatchPayload!
+  upsertRate(where: RateWhereUniqueInput!, create: RateCreateInput!, update: RateUpdateInput!): Rate!
+  deleteRate(where: RateWhereUniqueInput!): Rate
+  deleteManyRates(where: RateWhereInput): BatchPayload!
+  createSetting(data: SettingCreateInput!): Setting!
+  updateManySettings(data: SettingUpdateManyMutationInput!, where: SettingWhereInput): BatchPayload!
+  deleteManySettings(where: SettingWhereInput): BatchPayload!
+  createSubscribe(data: SubscribeCreateInput!): Subscribe!
+  updateManySubscribes(data: SubscribeUpdateManyMutationInput!, where: SubscribeWhereInput): BatchPayload!
+  deleteManySubscribes(where: SubscribeWhereInput): BatchPayload!
   createToken(data: TokenCreateInput!): Token!
   updateToken(data: TokenUpdateInput!, where: TokenWhereUniqueInput!): Token
   updateManyTokens(data: TokenUpdateManyMutationInput!, where: TokenWhereInput): BatchPayload!
@@ -279,12 +882,9 @@ type Mutation {
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  createrate(data: rateCreateInput!): rate!
-  updaterate(data: rateUpdateInput!, where: rateWhereUniqueInput!): rate
-  updateManyrates(data: rateUpdateManyMutationInput!, where: rateWhereInput): BatchPayload!
-  upsertrate(where: rateWhereUniqueInput!, create: rateCreateInput!, update: rateUpdateInput!): rate!
-  deleterate(where: rateWhereUniqueInput!): rate
-  deleteManyrates(where: rateWhereInput): BatchPayload!
+  createWallet(data: WalletCreateInput!): Wallet!
+  updateManyWallets(data: WalletUpdateManyMutationInput!, where: WalletWhereInput): BatchPayload!
+  deleteManyWallets(where: WalletWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -293,8 +893,308 @@ enum MutationType {
   DELETED
 }
 
+type Mycoin {
+  coin_name: String!
+  coin_price: Float!
+}
+
+type MycoinConnection {
+  pageInfo: PageInfo!
+  edges: [MycoinEdge]!
+  aggregate: AggregateMycoin!
+}
+
+input MycoinCreateInput {
+  coin_name: String!
+  coin_price: Float!
+}
+
+type MycoinEdge {
+  node: Mycoin!
+  cursor: String!
+}
+
+enum MycoinOrderByInput {
+  coin_name_ASC
+  coin_name_DESC
+  coin_price_ASC
+  coin_price_DESC
+}
+
+type MycoinPreviousValues {
+  coin_name: String!
+  coin_price: Float!
+}
+
+type MycoinSubscriptionPayload {
+  mutation: MutationType!
+  node: Mycoin
+  updatedFields: [String!]
+  previousValues: MycoinPreviousValues
+}
+
+input MycoinSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MycoinWhereInput
+  AND: [MycoinSubscriptionWhereInput!]
+  OR: [MycoinSubscriptionWhereInput!]
+  NOT: [MycoinSubscriptionWhereInput!]
+}
+
+input MycoinUpdateManyMutationInput {
+  coin_name: String
+  coin_price: Float
+}
+
+input MycoinWhereInput {
+  coin_name: String
+  coin_name_not: String
+  coin_name_in: [String!]
+  coin_name_not_in: [String!]
+  coin_name_lt: String
+  coin_name_lte: String
+  coin_name_gt: String
+  coin_name_gte: String
+  coin_name_contains: String
+  coin_name_not_contains: String
+  coin_name_starts_with: String
+  coin_name_not_starts_with: String
+  coin_name_ends_with: String
+  coin_name_not_ends_with: String
+  coin_price: Float
+  coin_price_not: Float
+  coin_price_in: [Float!]
+  coin_price_not_in: [Float!]
+  coin_price_lt: Float
+  coin_price_lte: Float
+  coin_price_gt: Float
+  coin_price_gte: Float
+  AND: [MycoinWhereInput!]
+  OR: [MycoinWhereInput!]
+  NOT: [MycoinWhereInput!]
+}
+
 interface Node {
   id: ID!
+}
+
+type Onchain {
+  from: String!
+  to: String!
+  amount: String!
+  timestamp: Int!
+}
+
+type OnchainConnection {
+  pageInfo: PageInfo!
+  edges: [OnchainEdge]!
+  aggregate: AggregateOnchain!
+}
+
+input OnchainCreateInput {
+  from: String!
+  to: String!
+  amount: String!
+  timestamp: Int!
+}
+
+type OnchainEdge {
+  node: Onchain!
+  cursor: String!
+}
+
+type OnchainExchange {
+  btc: Int
+  eth: Int
+  usdt: Int
+}
+
+type OnchainExchangeConnection {
+  pageInfo: PageInfo!
+  edges: [OnchainExchangeEdge]!
+  aggregate: AggregateOnchainExchange!
+}
+
+input OnchainExchangeCreateInput {
+  btc: Int
+  eth: Int
+  usdt: Int
+}
+
+type OnchainExchangeEdge {
+  node: OnchainExchange!
+  cursor: String!
+}
+
+enum OnchainExchangeOrderByInput {
+  btc_ASC
+  btc_DESC
+  eth_ASC
+  eth_DESC
+  usdt_ASC
+  usdt_DESC
+}
+
+type OnchainExchangePreviousValues {
+  btc: Int
+  eth: Int
+  usdt: Int
+}
+
+type OnchainExchangeSubscriptionPayload {
+  mutation: MutationType!
+  node: OnchainExchange
+  updatedFields: [String!]
+  previousValues: OnchainExchangePreviousValues
+}
+
+input OnchainExchangeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OnchainExchangeWhereInput
+  AND: [OnchainExchangeSubscriptionWhereInput!]
+  OR: [OnchainExchangeSubscriptionWhereInput!]
+  NOT: [OnchainExchangeSubscriptionWhereInput!]
+}
+
+input OnchainExchangeUpdateManyMutationInput {
+  btc: Int
+  eth: Int
+  usdt: Int
+}
+
+input OnchainExchangeWhereInput {
+  btc: Int
+  btc_not: Int
+  btc_in: [Int!]
+  btc_not_in: [Int!]
+  btc_lt: Int
+  btc_lte: Int
+  btc_gt: Int
+  btc_gte: Int
+  eth: Int
+  eth_not: Int
+  eth_in: [Int!]
+  eth_not_in: [Int!]
+  eth_lt: Int
+  eth_lte: Int
+  eth_gt: Int
+  eth_gte: Int
+  usdt: Int
+  usdt_not: Int
+  usdt_in: [Int!]
+  usdt_not_in: [Int!]
+  usdt_lt: Int
+  usdt_lte: Int
+  usdt_gt: Int
+  usdt_gte: Int
+  AND: [OnchainExchangeWhereInput!]
+  OR: [OnchainExchangeWhereInput!]
+  NOT: [OnchainExchangeWhereInput!]
+}
+
+enum OnchainOrderByInput {
+  from_ASC
+  from_DESC
+  to_ASC
+  to_DESC
+  amount_ASC
+  amount_DESC
+  timestamp_ASC
+  timestamp_DESC
+}
+
+type OnchainPreviousValues {
+  from: String!
+  to: String!
+  amount: String!
+  timestamp: Int!
+}
+
+type OnchainSubscriptionPayload {
+  mutation: MutationType!
+  node: Onchain
+  updatedFields: [String!]
+  previousValues: OnchainPreviousValues
+}
+
+input OnchainSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OnchainWhereInput
+  AND: [OnchainSubscriptionWhereInput!]
+  OR: [OnchainSubscriptionWhereInput!]
+  NOT: [OnchainSubscriptionWhereInput!]
+}
+
+input OnchainUpdateManyMutationInput {
+  from: String
+  to: String
+  amount: String
+  timestamp: Int
+}
+
+input OnchainWhereInput {
+  from: String
+  from_not: String
+  from_in: [String!]
+  from_not_in: [String!]
+  from_lt: String
+  from_lte: String
+  from_gt: String
+  from_gte: String
+  from_contains: String
+  from_not_contains: String
+  from_starts_with: String
+  from_not_starts_with: String
+  from_ends_with: String
+  from_not_ends_with: String
+  to: String
+  to_not: String
+  to_in: [String!]
+  to_not_in: [String!]
+  to_lt: String
+  to_lte: String
+  to_gt: String
+  to_gte: String
+  to_contains: String
+  to_not_contains: String
+  to_starts_with: String
+  to_not_starts_with: String
+  to_ends_with: String
+  to_not_ends_with: String
+  amount: String
+  amount_not: String
+  amount_in: [String!]
+  amount_not_in: [String!]
+  amount_lt: String
+  amount_lte: String
+  amount_gt: String
+  amount_gte: String
+  amount_contains: String
+  amount_not_contains: String
+  amount_starts_with: String
+  amount_not_starts_with: String
+  amount_ends_with: String
+  amount_not_ends_with: String
+  timestamp: Int
+  timestamp_not: Int
+  timestamp_in: [Int!]
+  timestamp_not_in: [Int!]
+  timestamp_lt: Int
+  timestamp_lte: Int
+  timestamp_gt: Int
+  timestamp_gte: Int
+  AND: [OnchainWhereInput!]
+  OR: [OnchainWhereInput!]
+  NOT: [OnchainWhereInput!]
 }
 
 type PageInfo {
@@ -305,10 +1205,31 @@ type PageInfo {
 }
 
 type Query {
+  battles(where: BattleWhereInput, orderBy: BattleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Battle]!
+  battlesConnection(where: BattleWhereInput, orderBy: BattleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BattleConnection!
+  btcPlaceOrders(where: BtcPlaceOrderWhereInput, orderBy: BtcPlaceOrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BtcPlaceOrder]!
+  btcPlaceOrdersConnection(where: BtcPlaceOrderWhereInput, orderBy: BtcPlaceOrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BtcPlaceOrderConnection!
+  closeouts(where: CloseoutWhereInput, orderBy: CloseoutOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Closeout]!
+  closeoutsConnection(where: CloseoutWhereInput, orderBy: CloseoutOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CloseoutConnection!
+  distributions(where: DistributionWhereInput, orderBy: DistributionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Distribution]!
+  distributionsConnection(where: DistributionWhereInput, orderBy: DistributionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DistributionConnection!
   follows(where: FollowWhereInput, orderBy: FollowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Follow]!
   followsConnection(where: FollowWhereInput, orderBy: FollowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FollowConnection!
   moments(where: MomentWhereInput, orderBy: MomentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Moment]!
   momentsConnection(where: MomentWhereInput, orderBy: MomentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MomentConnection!
+  mycoins(where: MycoinWhereInput, orderBy: MycoinOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Mycoin]!
+  mycoinsConnection(where: MycoinWhereInput, orderBy: MycoinOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MycoinConnection!
+  onchains(where: OnchainWhereInput, orderBy: OnchainOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Onchain]!
+  onchainsConnection(where: OnchainWhereInput, orderBy: OnchainOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OnchainConnection!
+  onchainExchanges(where: OnchainExchangeWhereInput, orderBy: OnchainExchangeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OnchainExchange]!
+  onchainExchangesConnection(where: OnchainExchangeWhereInput, orderBy: OnchainExchangeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OnchainExchangeConnection!
+  rate(where: RateWhereUniqueInput!): Rate
+  rates(where: RateWhereInput, orderBy: RateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rate]!
+  ratesConnection(where: RateWhereInput, orderBy: RateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RateConnection!
+  settings(where: SettingWhereInput, orderBy: SettingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Setting]!
+  settingsConnection(where: SettingWhereInput, orderBy: SettingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SettingConnection!
+  subscribes(where: SubscribeWhereInput, orderBy: SubscribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subscribe]!
+  subscribesConnection(where: SubscribeWhereInput, orderBy: SubscribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubscribeConnection!
   token(where: TokenWhereUniqueInput!): Token
   tokens(where: TokenWhereInput, orderBy: TokenOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Token]!
   tokensConnection(where: TokenWhereInput, orderBy: TokenOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TokenConnection!
@@ -317,74 +1238,73 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  rate(where: rateWhereUniqueInput!): rate
-  rates(where: rateWhereInput, orderBy: rateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [rate]!
-  ratesConnection(where: rateWhereInput, orderBy: rateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): rateConnection!
+  wallets(where: WalletWhereInput, orderBy: WalletOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Wallet]!
+  walletsConnection(where: WalletWhereInput, orderBy: WalletOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WalletConnection!
   node(id: ID!): Node
 }
 
-type rate {
+type Rate {
   key: String
   value: String
 }
 
-type rateConnection {
+type RateConnection {
   pageInfo: PageInfo!
-  edges: [rateEdge]!
-  aggregate: Aggregaterate!
+  edges: [RateEdge]!
+  aggregate: AggregateRate!
 }
 
-input rateCreateInput {
+input RateCreateInput {
   key: String
   value: String
 }
 
-type rateEdge {
-  node: rate!
+type RateEdge {
+  node: Rate!
   cursor: String!
 }
 
-enum rateOrderByInput {
+enum RateOrderByInput {
   key_ASC
   key_DESC
   value_ASC
   value_DESC
 }
 
-type ratePreviousValues {
+type RatePreviousValues {
   key: String
   value: String
 }
 
-type rateSubscriptionPayload {
+type RateSubscriptionPayload {
   mutation: MutationType!
-  node: rate
+  node: Rate
   updatedFields: [String!]
-  previousValues: ratePreviousValues
+  previousValues: RatePreviousValues
 }
 
-input rateSubscriptionWhereInput {
+input RateSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: rateWhereInput
-  AND: [rateSubscriptionWhereInput!]
-  OR: [rateSubscriptionWhereInput!]
-  NOT: [rateSubscriptionWhereInput!]
+  node: RateWhereInput
+  AND: [RateSubscriptionWhereInput!]
+  OR: [RateSubscriptionWhereInput!]
+  NOT: [RateSubscriptionWhereInput!]
 }
 
-input rateUpdateInput {
+input RateUpdateInput {
   key: String
   value: String
 }
 
-input rateUpdateManyMutationInput {
+input RateUpdateManyMutationInput {
   key: String
   value: String
 }
 
-input rateWhereInput {
+input RateWhereInput {
   key: String
   key_not: String
   key_in: [String!]
@@ -413,22 +1333,237 @@ input rateWhereInput {
   value_not_starts_with: String
   value_ends_with: String
   value_not_ends_with: String
-  AND: [rateWhereInput!]
-  OR: [rateWhereInput!]
-  NOT: [rateWhereInput!]
+  AND: [RateWhereInput!]
+  OR: [RateWhereInput!]
+  NOT: [RateWhereInput!]
 }
 
-input rateWhereUniqueInput {
+input RateWhereUniqueInput {
   key: String
 }
 
+type Setting {
+  assetsSetting: Int
+  positionSetting: Int
+  actionSetting: Int
+}
+
+type SettingConnection {
+  pageInfo: PageInfo!
+  edges: [SettingEdge]!
+  aggregate: AggregateSetting!
+}
+
+input SettingCreateInput {
+  assetsSetting: Int
+  positionSetting: Int
+  actionSetting: Int
+}
+
+input SettingCreateOneInput {
+  create: SettingCreateInput
+}
+
+type SettingEdge {
+  node: Setting!
+  cursor: String!
+}
+
+enum SettingOrderByInput {
+  assetsSetting_ASC
+  assetsSetting_DESC
+  positionSetting_ASC
+  positionSetting_DESC
+  actionSetting_ASC
+  actionSetting_DESC
+}
+
+type SettingPreviousValues {
+  assetsSetting: Int
+  positionSetting: Int
+  actionSetting: Int
+}
+
+type SettingSubscriptionPayload {
+  mutation: MutationType!
+  node: Setting
+  updatedFields: [String!]
+  previousValues: SettingPreviousValues
+}
+
+input SettingSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SettingWhereInput
+  AND: [SettingSubscriptionWhereInput!]
+  OR: [SettingSubscriptionWhereInput!]
+  NOT: [SettingSubscriptionWhereInput!]
+}
+
+input SettingUpdateDataInput {
+  assetsSetting: Int
+  positionSetting: Int
+  actionSetting: Int
+}
+
+input SettingUpdateManyMutationInput {
+  assetsSetting: Int
+  positionSetting: Int
+  actionSetting: Int
+}
+
+input SettingUpdateOneInput {
+  create: SettingCreateInput
+  update: SettingUpdateDataInput
+  upsert: SettingUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+}
+
+input SettingUpsertNestedInput {
+  update: SettingUpdateDataInput!
+  create: SettingCreateInput!
+}
+
+input SettingWhereInput {
+  assetsSetting: Int
+  assetsSetting_not: Int
+  assetsSetting_in: [Int!]
+  assetsSetting_not_in: [Int!]
+  assetsSetting_lt: Int
+  assetsSetting_lte: Int
+  assetsSetting_gt: Int
+  assetsSetting_gte: Int
+  positionSetting: Int
+  positionSetting_not: Int
+  positionSetting_in: [Int!]
+  positionSetting_not_in: [Int!]
+  positionSetting_lt: Int
+  positionSetting_lte: Int
+  positionSetting_gt: Int
+  positionSetting_gte: Int
+  actionSetting: Int
+  actionSetting_not: Int
+  actionSetting_in: [Int!]
+  actionSetting_not_in: [Int!]
+  actionSetting_lt: Int
+  actionSetting_lte: Int
+  actionSetting_gt: Int
+  actionSetting_gte: Int
+  AND: [SettingWhereInput!]
+  OR: [SettingWhereInput!]
+  NOT: [SettingWhereInput!]
+}
+
+type Subscribe {
+  follower: String!
+  leader: String!
+}
+
+type SubscribeConnection {
+  pageInfo: PageInfo!
+  edges: [SubscribeEdge]!
+  aggregate: AggregateSubscribe!
+}
+
+input SubscribeCreateInput {
+  follower: String!
+  leader: String!
+}
+
+type SubscribeEdge {
+  node: Subscribe!
+  cursor: String!
+}
+
+enum SubscribeOrderByInput {
+  follower_ASC
+  follower_DESC
+  leader_ASC
+  leader_DESC
+}
+
+type SubscribePreviousValues {
+  follower: String!
+  leader: String!
+}
+
+type SubscribeSubscriptionPayload {
+  mutation: MutationType!
+  node: Subscribe
+  updatedFields: [String!]
+  previousValues: SubscribePreviousValues
+}
+
+input SubscribeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SubscribeWhereInput
+  AND: [SubscribeSubscriptionWhereInput!]
+  OR: [SubscribeSubscriptionWhereInput!]
+  NOT: [SubscribeSubscriptionWhereInput!]
+}
+
+input SubscribeUpdateManyMutationInput {
+  follower: String
+  leader: String
+}
+
+input SubscribeWhereInput {
+  follower: String
+  follower_not: String
+  follower_in: [String!]
+  follower_not_in: [String!]
+  follower_lt: String
+  follower_lte: String
+  follower_gt: String
+  follower_gte: String
+  follower_contains: String
+  follower_not_contains: String
+  follower_starts_with: String
+  follower_not_starts_with: String
+  follower_ends_with: String
+  follower_not_ends_with: String
+  leader: String
+  leader_not: String
+  leader_in: [String!]
+  leader_not_in: [String!]
+  leader_lt: String
+  leader_lte: String
+  leader_gt: String
+  leader_gte: String
+  leader_contains: String
+  leader_not_contains: String
+  leader_starts_with: String
+  leader_not_starts_with: String
+  leader_ends_with: String
+  leader_not_ends_with: String
+  AND: [SubscribeWhereInput!]
+  OR: [SubscribeWhereInput!]
+  NOT: [SubscribeWhereInput!]
+}
+
 type Subscription {
+  battle(where: BattleSubscriptionWhereInput): BattleSubscriptionPayload
+  btcPlaceOrder(where: BtcPlaceOrderSubscriptionWhereInput): BtcPlaceOrderSubscriptionPayload
+  closeout(where: CloseoutSubscriptionWhereInput): CloseoutSubscriptionPayload
+  distribution(where: DistributionSubscriptionWhereInput): DistributionSubscriptionPayload
   follow(where: FollowSubscriptionWhereInput): FollowSubscriptionPayload
   moment(where: MomentSubscriptionWhereInput): MomentSubscriptionPayload
+  mycoin(where: MycoinSubscriptionWhereInput): MycoinSubscriptionPayload
+  onchain(where: OnchainSubscriptionWhereInput): OnchainSubscriptionPayload
+  onchainExchange(where: OnchainExchangeSubscriptionWhereInput): OnchainExchangeSubscriptionPayload
+  rate(where: RateSubscriptionWhereInput): RateSubscriptionPayload
+  setting(where: SettingSubscriptionWhereInput): SettingSubscriptionPayload
+  subscribe(where: SubscribeSubscriptionWhereInput): SubscribeSubscriptionPayload
   token(where: TokenSubscriptionWhereInput): TokenSubscriptionPayload
   transactions(where: TransactionsSubscriptionWhereInput): TransactionsSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  rate(where: rateSubscriptionWhereInput): rateSubscriptionPayload
+  wallet(where: WalletSubscriptionWhereInput): WalletSubscriptionPayload
 }
 
 type Token {
@@ -692,6 +1827,11 @@ type User {
   apiKey: String
   apiSecret: String
   passPhrase: String
+  subscribeCost: String
+  totalProperty: String
+  totalEarnRate: String
+  totalEarnValue: String
+  setting: Setting
 }
 
 type UserConnection {
@@ -709,6 +1849,11 @@ input UserCreateInput {
   apiKey: String
   apiSecret: String
   passPhrase: String
+  subscribeCost: String
+  totalProperty: String
+  totalEarnRate: String
+  totalEarnValue: String
+  setting: SettingCreateOneInput
 }
 
 input UserCreateOneWithoutMomentInput {
@@ -724,6 +1869,11 @@ input UserCreateWithoutMomentInput {
   apiKey: String
   apiSecret: String
   passPhrase: String
+  subscribeCost: String
+  totalProperty: String
+  totalEarnRate: String
+  totalEarnValue: String
+  setting: SettingCreateOneInput
 }
 
 type UserEdge {
@@ -750,6 +1900,14 @@ enum UserOrderByInput {
   apiSecret_DESC
   passPhrase_ASC
   passPhrase_DESC
+  subscribeCost_ASC
+  subscribeCost_DESC
+  totalProperty_ASC
+  totalProperty_DESC
+  totalEarnRate_ASC
+  totalEarnRate_DESC
+  totalEarnValue_ASC
+  totalEarnValue_DESC
 }
 
 type UserPreviousValues {
@@ -762,6 +1920,10 @@ type UserPreviousValues {
   apiKey: String
   apiSecret: String
   passPhrase: String
+  subscribeCost: String
+  totalProperty: String
+  totalEarnRate: String
+  totalEarnValue: String
 }
 
 type UserSubscriptionPayload {
@@ -791,6 +1953,11 @@ input UserUpdateInput {
   apiKey: String
   apiSecret: String
   passPhrase: String
+  subscribeCost: String
+  totalProperty: String
+  totalEarnRate: String
+  totalEarnValue: String
+  setting: SettingUpdateOneInput
 }
 
 input UserUpdateManyMutationInput {
@@ -801,6 +1968,10 @@ input UserUpdateManyMutationInput {
   apiKey: String
   apiSecret: String
   passPhrase: String
+  subscribeCost: String
+  totalProperty: String
+  totalEarnRate: String
+  totalEarnValue: String
 }
 
 input UserWhereInput {
@@ -925,6 +2096,63 @@ input UserWhereInput {
   passPhrase_not_starts_with: String
   passPhrase_ends_with: String
   passPhrase_not_ends_with: String
+  subscribeCost: String
+  subscribeCost_not: String
+  subscribeCost_in: [String!]
+  subscribeCost_not_in: [String!]
+  subscribeCost_lt: String
+  subscribeCost_lte: String
+  subscribeCost_gt: String
+  subscribeCost_gte: String
+  subscribeCost_contains: String
+  subscribeCost_not_contains: String
+  subscribeCost_starts_with: String
+  subscribeCost_not_starts_with: String
+  subscribeCost_ends_with: String
+  subscribeCost_not_ends_with: String
+  totalProperty: String
+  totalProperty_not: String
+  totalProperty_in: [String!]
+  totalProperty_not_in: [String!]
+  totalProperty_lt: String
+  totalProperty_lte: String
+  totalProperty_gt: String
+  totalProperty_gte: String
+  totalProperty_contains: String
+  totalProperty_not_contains: String
+  totalProperty_starts_with: String
+  totalProperty_not_starts_with: String
+  totalProperty_ends_with: String
+  totalProperty_not_ends_with: String
+  totalEarnRate: String
+  totalEarnRate_not: String
+  totalEarnRate_in: [String!]
+  totalEarnRate_not_in: [String!]
+  totalEarnRate_lt: String
+  totalEarnRate_lte: String
+  totalEarnRate_gt: String
+  totalEarnRate_gte: String
+  totalEarnRate_contains: String
+  totalEarnRate_not_contains: String
+  totalEarnRate_starts_with: String
+  totalEarnRate_not_starts_with: String
+  totalEarnRate_ends_with: String
+  totalEarnRate_not_ends_with: String
+  totalEarnValue: String
+  totalEarnValue_not: String
+  totalEarnValue_in: [String!]
+  totalEarnValue_not_in: [String!]
+  totalEarnValue_lt: String
+  totalEarnValue_lte: String
+  totalEarnValue_gt: String
+  totalEarnValue_gte: String
+  totalEarnValue_contains: String
+  totalEarnValue_not_contains: String
+  totalEarnValue_starts_with: String
+  totalEarnValue_not_starts_with: String
+  totalEarnValue_ends_with: String
+  totalEarnValue_not_ends_with: String
+  setting: SettingWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -932,6 +2160,96 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+}
+
+type Wallet {
+  userId: String
+  balance: String
+}
+
+type WalletConnection {
+  pageInfo: PageInfo!
+  edges: [WalletEdge]!
+  aggregate: AggregateWallet!
+}
+
+input WalletCreateInput {
+  userId: String
+  balance: String
+}
+
+type WalletEdge {
+  node: Wallet!
+  cursor: String!
+}
+
+enum WalletOrderByInput {
+  userId_ASC
+  userId_DESC
+  balance_ASC
+  balance_DESC
+}
+
+type WalletPreviousValues {
+  userId: String
+  balance: String
+}
+
+type WalletSubscriptionPayload {
+  mutation: MutationType!
+  node: Wallet
+  updatedFields: [String!]
+  previousValues: WalletPreviousValues
+}
+
+input WalletSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: WalletWhereInput
+  AND: [WalletSubscriptionWhereInput!]
+  OR: [WalletSubscriptionWhereInput!]
+  NOT: [WalletSubscriptionWhereInput!]
+}
+
+input WalletUpdateManyMutationInput {
+  userId: String
+  balance: String
+}
+
+input WalletWhereInput {
+  userId: String
+  userId_not: String
+  userId_in: [String!]
+  userId_not_in: [String!]
+  userId_lt: String
+  userId_lte: String
+  userId_gt: String
+  userId_gte: String
+  userId_contains: String
+  userId_not_contains: String
+  userId_starts_with: String
+  userId_not_starts_with: String
+  userId_ends_with: String
+  userId_not_ends_with: String
+  balance: String
+  balance_not: String
+  balance_in: [String!]
+  balance_not_in: [String!]
+  balance_lt: String
+  balance_lte: String
+  balance_gt: String
+  balance_gte: String
+  balance_contains: String
+  balance_not_contains: String
+  balance_starts_with: String
+  balance_not_starts_with: String
+  balance_ends_with: String
+  balance_not_ends_with: String
+  AND: [WalletWhereInput!]
+  OR: [WalletWhereInput!]
+  NOT: [WalletWhereInput!]
 }
 `
       }

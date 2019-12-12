@@ -4,12 +4,30 @@ type Query {
 #  获取单一用户信息
   getUser(UID:String!): getUserPayload
   getUsers(skip: Int, first: Int): getUsersPayload
-  getFollowers(skip: Int, first: Int): getFollowersPayload
-  getAttentions(skip: Int, first: Int): getAttentionsPayload
+  getFollowers(skip: Int, first: Int, count: Boolean): getFollowersPayload
+  getAttentions(skip: Int, first: Int, count: Boolean): getAttentionsPayload
+  getSubscribes(skip: Int, first: Int, count: Boolean): getSubscribesPayload
+  getSetting: getSettingPayload
+  getWallet: getWalletPayload
+  getCount: getCountPayload
 
   getMoments(skip: Int, first: Int, UID: String): getMomentsPayload
+# 持仓账户信息
+  getPositionInfo: getPositionInfoPayload
+# 查询账单流水
+  getLedger(before: String): getLedgerPayload
+# 查询资产
+  getProperty(UID: String!): getPropertyPayload
+# 合约持仓信息
+  getContractInfo: getContractInfoPayload
 
-  getWalletInfo: getWalletInfoPayload
+  getCloseout(skip: Int, first: Int): [getCloseoutPayload]
+  getMycoin: [getMycoinPayload]
+  getBattle: getBattlePayload
+  getOnchainexchange: getOnchainexchangePayload
+  getBtcplaceorder: getBtcplaceorderPayload
+  getDistribution: [getDistributionPayload]
+  getCloseoutSummary: [getCloseoutSummaryPayload]
 }
 
 type Mutation {
@@ -18,12 +36,74 @@ type Mutation {
   changeOKEXInfo(apiKey:String, apiSecret:String, passPhrase:String): changeOKEXInfoPayload
   login(phoneNumber: String!, sms: String!): loginPayload
   getMessage: getMessagePayload
-  subcribe(UID:String!) : subscribePayload
-  cancelsubcribe(UID:String!): cancelsubscribePayload
+  subscribe(UID:String!) : subscribePayload
+  cancelsubscribe(UID:String!): cancelsubscribePayload
+
+  changeSubscribeCost(cost:String!): changeSubscribeCostPayload
+  changeSetting(assetsSetting:Int, positionSetting:Int, actionSetting:Int): changeSettingPayload
 
   attentionTo(UID:String!): attentionToPayload
+  cancelAttention(UID:String!): cancelAttentionPayload
 
   createMoment(title:String, content:String): createMomentPayload
+}
+
+
+type getMycoinPayload {
+  coin_name: String
+  coin_price: Float
+}
+
+type getCloseoutSummaryPayload {
+  coin: String
+  loss: Int
+  percentage: Float
+}
+
+type getDistributionPayload {
+  arrange: Int
+  count: Int
+}
+
+type getBtcplaceorderPayload {
+  long: Int
+  longDeal: Int
+  longDealAmount: Int
+  short: Int
+  shortDeal: Int
+  shortDealAmount: Int
+}
+
+type getOnchainexchangePayload {
+  btc: Int
+  eth: Int
+  usdt: Int
+}
+
+type getBattlePayload {
+  longOKex: Float
+  shortOKex: Float
+  longHuobi: Float
+  shortHuobi: Float
+  longBitMex: Float
+  shortBitMex: Float
+}
+
+type getOnchainexangePayload {
+  btc: Int
+  eth: Int
+  usdt: Int
+}
+
+type getCloseoutPayload {
+  timestamp: Int
+  exchange: String
+  contract_name: String
+  contract_type: String
+  closeout_type: String
+  contract_price: String
+  amount: String
+  price: String
 }
 
 type loginPayload {
@@ -42,7 +122,7 @@ type cancelsubscribePayload {
   errMessage:String
 }
 
-type subscribePayload { 
+type subscribePayload {
   isSuccess:Boolean
   errMessage:String
 }
@@ -53,6 +133,16 @@ type changeintroductionPayload {
 }
 
 type changenickNamePayload {
+  isSuccess:Boolean
+  errMessage:String
+}
+
+type changeSubscribeCostPayload {
+  isSuccess:Boolean
+  errMessage:String
+}
+
+type changeSettingPayload {
   isSuccess:Boolean
   errMessage:String
 }
@@ -71,6 +161,22 @@ type user {
   apiKey: String
   apiSecret: String
   passPhrase: String
+  subscribeCost: String
+  totalProperty: String
+  leverage: Float
+  type: String
+  totalEarnRate: Float
+  totalEarnValue: Float
+  followed: Boolean
+  subscribed: Boolean
+}
+
+type getSettingPayload {
+  isSuccess:Boolean
+  errMessage:String
+  assetsSetting: Int
+  positionSetting: Int
+  actionSetting: Int
 }
 
 type mePayload {
@@ -91,7 +197,18 @@ type getUsersPayload {
   users:[user]
 }
 
+type getSubscribesPayload {
+  isSuccess:Boolean
+  errMessage:String
+  users:[user]
+}
+
 type attentionToPayload {
+  isSuccess:Boolean
+  errMessage:String
+}
+
+type cancelAttentionPayload {
   isSuccess:Boolean
   errMessage:String
 }
@@ -100,6 +217,12 @@ type getFollowersPayload {
   isSuccess:Boolean
   errMessage:String
   users:[user]
+}
+
+type getWalletPayload {
+  isSuccess:Boolean
+  errMessage:String
+  balance:String
 }
 
 type getAttentionsPayload {
@@ -131,11 +254,75 @@ type assets {
   balance:String
   currency:String
   hold:String
+  cost:String
   price:String
+  totalprice:String
 }
 
-type getWalletInfoPayload {
+type getPositionInfoPayload {
   isSuccess:Boolean
   errMessage:String
   assetses:[assets]
+}
+
+type ledger {
+  amount:String
+  balance:String
+  currency:String
+  fee:String
+  ledger_id:String
+  timestamp:String
+  typename:String
+}
+
+type getLedgerPayload {
+  isSuccess:Boolean
+  errMessage:String
+  ledgers:[ledger]
+}
+
+type getPropertyPayload {
+  isSuccess:Boolean
+  errMessage:String
+  totalProperty:String
+  earnRate:Float
+  totalEarning:Float
+  winRate:Float
+  duration:String
+  weeklyEarning:Float
+  weeklyWinRate:Float
+  frequency:String
+}
+
+type contractInfo {
+  margin_mode:String
+  liquidation_price:String
+  position:String
+  avail_position:String
+  margin:String
+  avg_cost:String
+  settlement_price:String
+  instrument_id:String
+  leverage:String
+  realized_pnl:String
+  side:String
+  timestamp:String
+  maint_margin_ratio:String
+  settled_pnl:String
+  last:String
+  unrealized_pnlString:String
+}
+
+type getContractInfoPayload {
+  isSuccess:Boolean
+  errMessage:String
+  contractInfo:[contractInfo]
+}
+
+type getCountPayload {
+  isSuccess:Boolean
+  errMessage:String
+  subscribeCount:String
+  followerCount:String
+  attentionCount:String
 }

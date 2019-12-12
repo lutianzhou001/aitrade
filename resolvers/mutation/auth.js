@@ -11,7 +11,14 @@ const auth = {
         const createUser = await ctx.prisma.createUser({
           phoneNumber: args.phoneNumber,
           nickName: "用户" + args.phoneNumber,
-          introduction: "期待你写点什么哦"
+          introduction: "期待你写点什么哦",
+          setting: {
+            create:{
+              assetsSetting: 1,
+              positionSetting: 1,
+              actionSetting: 1
+            }
+          }
         })
         if (createUser) {
           const users = await ctx.prisma.users({ where: { phoneNumber: args.phoneNumber } })
