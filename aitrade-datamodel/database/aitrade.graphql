@@ -36,17 +36,17 @@ type Moment {
 	content: String
 }
 
-type rate {
+type Rate {
 	key: String @unique
 	value: String
 }
 
-type mycoin {
+type Mycoin {
 	coin_name: String!
 	coin_price: Float!
 }
 
-type battle {
+type Battle {
 	longOKex: Int
 	shortOKex: Int
 	longHuobi: Int
@@ -55,43 +55,40 @@ type battle {
 	shortBitMex: Int
 }
 
-type onchainexchange {
+type OnchainExchange {
     btc: Int
 	eth: Int
 	usdt: Int
 }
 
-type btcplaceorder {
+type BtcPlaceOrder {
 	long: Int
-	deal: Int
-	dealAmount: Int
+	longDeal: Int
+	longDealAmount: Int
+	short: Int
+	shortDeal: Int
+	shortDealAmount: Int 
 }
 
-type distrubution {
-	ups: Int
-	downs: Int
+type Distribution {
+	arrange: Int
+	count: Int
 }
 
-type onchain {
+type Onchain {
 	from : String!
 	to: String!
 	amount: String!
 	timestamp: Int!
 }
 
-type margincloseout {
-	timestamp: Int!
+type Closeout {
 	exchange: String!
-	contract_name: String!
-	contract_type: String!
-	closeout_type: String!
-    contract_price: String!
-	amount: String!
+	instrument_id: String!
+	status: String!
+	limit: String!
+    from: String!
+	to: String!
 	price: Float!
-}
-
-type KOL {
-	long: Int!
-	short: Int!
 }
 

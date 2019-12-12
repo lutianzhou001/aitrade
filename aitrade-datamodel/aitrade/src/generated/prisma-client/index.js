@@ -25,23 +25,35 @@ var models = [
     embedded: false
   },
   {
-    name: "rate",
+    name: "Rate",
     embedded: false
   },
   {
-    name: "onchain",
+    name: "Mycoin",
     embedded: false
   },
   {
-    name: "margincloseout",
+    name: "Battle",
     embedded: false
   },
   {
-    name: "contract",
+    name: "OnchainExchange",
     embedded: false
   },
   {
-    name: "KOL",
+    name: "BtcPlaceOrder",
+    embedded: false
+  },
+  {
+    name: "Distribution",
+    embedded: false
+  },
+  {
+    name: "Onchain",
+    embedded: false
+  },
+  {
+    name: "Closeout",
     embedded: false
   }
 ];
