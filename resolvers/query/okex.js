@@ -6,7 +6,7 @@ const crypto = require('crypto');
 const okex = {
     async getPositionInfo(parent, args, ctx, info) {
         try {
-            const userId = getUserId(ctx);
+            const userId = args.UID;
             const user = await ctx.prisma.user({
                 id: userId
             });
@@ -69,7 +69,7 @@ const okex = {
 
     async getLedger(parent, args, ctx, info) {
         try {
-            const userId = getUserId(ctx);
+            const userId = args.UID;
             const user = await ctx.prisma.user({
                 id: userId
             });
@@ -81,9 +81,9 @@ const okex = {
                 }
             } else {
                 let timestamp = Date.now() / 1000;
-                let what = timestamp + 'GET' + '/api/account/v3/ledger?&limit=10';
-                if (args.before) {
-                    what = what + '&after=' + args.before
+                let what = timestamp + 'GET' + '/api/spot/v3/orders?instrument_id=BTC-USDT&state=2&limit=10';
+                if (args.after) {
+                    what = what + '&after=' + args.after
                 }
                 let hmac = crypto.createHmac('sha256', user.apiSecret);
                 let signature = hmac.update(what).digest('base64');
@@ -93,9 +93,9 @@ const okex = {
                     'OK-ACCESS-TIMESTAMP': timestamp,
                     'OK-ACCESS-PASSPHRASE': user.passPhrase
                 };
-                let requestUrl = apiUri+'/api/account/v3/ledger?&limit=10';
-                if (args.before) {
-                    requestUrl = requestUrl + '&after=' + args.before
+                let requestUrl = apiUri+'/api/spot/v3/orders?instrument_id=BTC-USDT&state=2&limit=10';
+                if (args.after) {
+                    requestUrl = requestUrl + '&after=' + args.after
                 }
                 console.log(requestUrl)
                 console.log(requestHeader)
@@ -123,12 +123,12 @@ const okex = {
                 isSuccess:true,
                 errMessage:null,
                 totalProperty:'10000',
-                earnRate:'+60.00%',
-                totalEarning:'-600',
-                winRate:'5.00%',
+                earnRate:60.00,
+                totalEarning:-600,
+                winRate:5.00,
                 duration:'19',
-                weeklyEarning:'+9000',
-                weeklyWinRate:'6.00%',
+                weeklyEarning:9000,
+                weeklyWinRate:6.00,
                 frequency:'6'
             }
         } catch (err) {
@@ -141,7 +141,7 @@ const okex = {
 
     async getContractInfo(parent, args, ctx, info) {
         try {
-            const userId = getUserId(ctx);
+            const userId = args.UID;
             const user = await ctx.prisma.user({
                 id: userId
             });

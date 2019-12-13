@@ -948,9 +948,9 @@ export interface UserUpdateManyMutationInput {
   apiSecret?: Maybe<String>;
   passPhrase?: Maybe<String>;
   subscribeCost?: Maybe<String>;
-  totalProperty?: Maybe<String>;
-  totalEarnRate?: Maybe<String>;
-  totalEarnValue?: Maybe<String>;
+  totalProperty?: Maybe<Float>;
+  totalEarnRate?: Maybe<Float>;
+  totalEarnValue?: Maybe<Float>;
 }
 
 export interface OnchainCreateInput {
@@ -1255,48 +1255,30 @@ export interface UserWhereInput {
   subscribeCost_not_starts_with?: Maybe<String>;
   subscribeCost_ends_with?: Maybe<String>;
   subscribeCost_not_ends_with?: Maybe<String>;
-  totalProperty?: Maybe<String>;
-  totalProperty_not?: Maybe<String>;
-  totalProperty_in?: Maybe<String[] | String>;
-  totalProperty_not_in?: Maybe<String[] | String>;
-  totalProperty_lt?: Maybe<String>;
-  totalProperty_lte?: Maybe<String>;
-  totalProperty_gt?: Maybe<String>;
-  totalProperty_gte?: Maybe<String>;
-  totalProperty_contains?: Maybe<String>;
-  totalProperty_not_contains?: Maybe<String>;
-  totalProperty_starts_with?: Maybe<String>;
-  totalProperty_not_starts_with?: Maybe<String>;
-  totalProperty_ends_with?: Maybe<String>;
-  totalProperty_not_ends_with?: Maybe<String>;
-  totalEarnRate?: Maybe<String>;
-  totalEarnRate_not?: Maybe<String>;
-  totalEarnRate_in?: Maybe<String[] | String>;
-  totalEarnRate_not_in?: Maybe<String[] | String>;
-  totalEarnRate_lt?: Maybe<String>;
-  totalEarnRate_lte?: Maybe<String>;
-  totalEarnRate_gt?: Maybe<String>;
-  totalEarnRate_gte?: Maybe<String>;
-  totalEarnRate_contains?: Maybe<String>;
-  totalEarnRate_not_contains?: Maybe<String>;
-  totalEarnRate_starts_with?: Maybe<String>;
-  totalEarnRate_not_starts_with?: Maybe<String>;
-  totalEarnRate_ends_with?: Maybe<String>;
-  totalEarnRate_not_ends_with?: Maybe<String>;
-  totalEarnValue?: Maybe<String>;
-  totalEarnValue_not?: Maybe<String>;
-  totalEarnValue_in?: Maybe<String[] | String>;
-  totalEarnValue_not_in?: Maybe<String[] | String>;
-  totalEarnValue_lt?: Maybe<String>;
-  totalEarnValue_lte?: Maybe<String>;
-  totalEarnValue_gt?: Maybe<String>;
-  totalEarnValue_gte?: Maybe<String>;
-  totalEarnValue_contains?: Maybe<String>;
-  totalEarnValue_not_contains?: Maybe<String>;
-  totalEarnValue_starts_with?: Maybe<String>;
-  totalEarnValue_not_starts_with?: Maybe<String>;
-  totalEarnValue_ends_with?: Maybe<String>;
-  totalEarnValue_not_ends_with?: Maybe<String>;
+  totalProperty?: Maybe<Float>;
+  totalProperty_not?: Maybe<Float>;
+  totalProperty_in?: Maybe<Float[] | Float>;
+  totalProperty_not_in?: Maybe<Float[] | Float>;
+  totalProperty_lt?: Maybe<Float>;
+  totalProperty_lte?: Maybe<Float>;
+  totalProperty_gt?: Maybe<Float>;
+  totalProperty_gte?: Maybe<Float>;
+  totalEarnRate?: Maybe<Float>;
+  totalEarnRate_not?: Maybe<Float>;
+  totalEarnRate_in?: Maybe<Float[] | Float>;
+  totalEarnRate_not_in?: Maybe<Float[] | Float>;
+  totalEarnRate_lt?: Maybe<Float>;
+  totalEarnRate_lte?: Maybe<Float>;
+  totalEarnRate_gt?: Maybe<Float>;
+  totalEarnRate_gte?: Maybe<Float>;
+  totalEarnValue?: Maybe<Float>;
+  totalEarnValue_not?: Maybe<Float>;
+  totalEarnValue_in?: Maybe<Float[] | Float>;
+  totalEarnValue_not_in?: Maybe<Float[] | Float>;
+  totalEarnValue_lt?: Maybe<Float>;
+  totalEarnValue_lte?: Maybe<Float>;
+  totalEarnValue_gt?: Maybe<Float>;
+  totalEarnValue_gte?: Maybe<Float>;
   setting?: Maybe<SettingWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -1364,9 +1346,9 @@ export interface UserCreateInput {
   apiSecret?: Maybe<String>;
   passPhrase?: Maybe<String>;
   subscribeCost?: Maybe<String>;
-  totalProperty?: Maybe<String>;
-  totalEarnRate?: Maybe<String>;
-  totalEarnValue?: Maybe<String>;
+  totalProperty?: Maybe<Float>;
+  totalEarnRate?: Maybe<Float>;
+  totalEarnValue?: Maybe<Float>;
   setting?: Maybe<SettingCreateOneInput>;
 }
 
@@ -1390,9 +1372,9 @@ export interface UserCreateWithoutMomentInput {
   apiSecret?: Maybe<String>;
   passPhrase?: Maybe<String>;
   subscribeCost?: Maybe<String>;
-  totalProperty?: Maybe<String>;
-  totalEarnRate?: Maybe<String>;
-  totalEarnValue?: Maybe<String>;
+  totalProperty?: Maybe<Float>;
+  totalEarnRate?: Maybe<Float>;
+  totalEarnValue?: Maybe<Float>;
   setting?: Maybe<SettingCreateOneInput>;
 }
 
@@ -1684,9 +1666,9 @@ export interface UserUpdateInput {
   apiSecret?: Maybe<String>;
   passPhrase?: Maybe<String>;
   subscribeCost?: Maybe<String>;
-  totalProperty?: Maybe<String>;
-  totalEarnRate?: Maybe<String>;
-  totalEarnValue?: Maybe<String>;
+  totalProperty?: Maybe<Float>;
+  totalEarnRate?: Maybe<Float>;
+  totalEarnValue?: Maybe<Float>;
   setting?: Maybe<SettingUpdateOneInput>;
 }
 
@@ -3224,9 +3206,9 @@ export interface UserPreviousValues {
   apiSecret?: String;
   passPhrase?: String;
   subscribeCost?: String;
-  totalProperty?: String;
-  totalEarnRate?: String;
-  totalEarnValue?: String;
+  totalProperty?: Float;
+  totalEarnRate?: Float;
+  totalEarnValue?: Float;
 }
 
 export interface UserPreviousValuesPromise
@@ -3242,9 +3224,9 @@ export interface UserPreviousValuesPromise
   apiSecret: () => Promise<String>;
   passPhrase: () => Promise<String>;
   subscribeCost: () => Promise<String>;
-  totalProperty: () => Promise<String>;
-  totalEarnRate: () => Promise<String>;
-  totalEarnValue: () => Promise<String>;
+  totalProperty: () => Promise<Float>;
+  totalEarnRate: () => Promise<Float>;
+  totalEarnValue: () => Promise<Float>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -3260,9 +3242,9 @@ export interface UserPreviousValuesSubscription
   apiSecret: () => Promise<AsyncIterator<String>>;
   passPhrase: () => Promise<AsyncIterator<String>>;
   subscribeCost: () => Promise<AsyncIterator<String>>;
-  totalProperty: () => Promise<AsyncIterator<String>>;
-  totalEarnRate: () => Promise<AsyncIterator<String>>;
-  totalEarnValue: () => Promise<AsyncIterator<String>>;
+  totalProperty: () => Promise<AsyncIterator<Float>>;
+  totalEarnRate: () => Promise<AsyncIterator<Float>>;
+  totalEarnValue: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface BtcPlaceOrderEdge {
@@ -4063,9 +4045,9 @@ export interface User {
   apiSecret?: String;
   passPhrase?: String;
   subscribeCost?: String;
-  totalProperty?: String;
-  totalEarnRate?: String;
-  totalEarnValue?: String;
+  totalProperty?: Float;
+  totalEarnRate?: Float;
+  totalEarnValue?: Float;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -4080,9 +4062,9 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   apiSecret: () => Promise<String>;
   passPhrase: () => Promise<String>;
   subscribeCost: () => Promise<String>;
-  totalProperty: () => Promise<String>;
-  totalEarnRate: () => Promise<String>;
-  totalEarnValue: () => Promise<String>;
+  totalProperty: () => Promise<Float>;
+  totalEarnRate: () => Promise<Float>;
+  totalEarnValue: () => Promise<Float>;
   setting: <T = SettingPromise>() => T;
 }
 
@@ -4100,9 +4082,9 @@ export interface UserSubscription
   apiSecret: () => Promise<AsyncIterator<String>>;
   passPhrase: () => Promise<AsyncIterator<String>>;
   subscribeCost: () => Promise<AsyncIterator<String>>;
-  totalProperty: () => Promise<AsyncIterator<String>>;
-  totalEarnRate: () => Promise<AsyncIterator<String>>;
-  totalEarnValue: () => Promise<AsyncIterator<String>>;
+  totalProperty: () => Promise<AsyncIterator<Float>>;
+  totalEarnRate: () => Promise<AsyncIterator<Float>>;
+  totalEarnValue: () => Promise<AsyncIterator<Float>>;
   setting: <T = SettingSubscription>() => T;
 }
 
@@ -4120,9 +4102,9 @@ export interface UserNullablePromise
   apiSecret: () => Promise<String>;
   passPhrase: () => Promise<String>;
   subscribeCost: () => Promise<String>;
-  totalProperty: () => Promise<String>;
-  totalEarnRate: () => Promise<String>;
-  totalEarnValue: () => Promise<String>;
+  totalProperty: () => Promise<Float>;
+  totalEarnRate: () => Promise<Float>;
+  totalEarnValue: () => Promise<Float>;
   setting: <T = SettingPromise>() => T;
 }
 

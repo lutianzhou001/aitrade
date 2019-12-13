@@ -10,9 +10,9 @@ type User {
 	apiSecret: String
 	passPhrase: String
 	subscribeCost: String
-	totalProperty: String
-	totalEarnRate: String
-	totalEarnValue: String
+	totalProperty: Float
+	totalEarnRate: Float
+	totalEarnValue: Float
 	setting: Setting
 }
 

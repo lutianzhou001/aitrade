@@ -13,13 +13,13 @@ type Query {
 
   getMoments(skip: Int, first: Int, UID: String): getMomentsPayload
 # 持仓账户信息
-  getPositionInfo: getPositionInfoPayload
+  getPositionInfo(UID: String): getPositionInfoPayload
 # 查询账单流水
-  getLedger(before: String): getLedgerPayload
+  getLedger(UID: String, after: String): getLedgerPayload
 # 查询资产
   getProperty(UID: String!): getPropertyPayload
 # 合约持仓信息
-  getContractInfo: getContractInfoPayload
+  getContractInfo(UID: String!): getContractInfoPayload
 
   getCloseout(skip: Int, first: Int): [getCloseoutPayload]
   getMycoin: [getMycoinPayload]
@@ -266,13 +266,20 @@ type getPositionInfoPayload {
 }
 
 type ledger {
-  amount:String
-  balance:String
-  currency:String
-  fee:String
-  ledger_id:String
+  order_id:String
+  client_oid:String
+  price:String
+  size:String
+  notional:String
+  instrument_id:String
+  type:String
+  side:String
   timestamp:String
-  typename:String
+  filled_size:String
+  filled_notional:String
+  order_type:String
+  state:String
+  price_avg:String
 }
 
 type getLedgerPayload {
@@ -310,7 +317,7 @@ type contractInfo {
   maint_margin_ratio:String
   settled_pnl:String
   last:String
-  unrealized_pnlString:String
+  unrealized_pnl:String
 }
 
 type getContractInfoPayload {

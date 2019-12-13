@@ -1828,9 +1828,9 @@ type User {
   apiSecret: String
   passPhrase: String
   subscribeCost: String
-  totalProperty: String
-  totalEarnRate: String
-  totalEarnValue: String
+  totalProperty: Float
+  totalEarnRate: Float
+  totalEarnValue: Float
   setting: Setting
 }
 
@@ -1850,9 +1850,9 @@ input UserCreateInput {
   apiSecret: String
   passPhrase: String
   subscribeCost: String
-  totalProperty: String
-  totalEarnRate: String
-  totalEarnValue: String
+  totalProperty: Float
+  totalEarnRate: Float
+  totalEarnValue: Float
   setting: SettingCreateOneInput
 }
 
@@ -1870,9 +1870,9 @@ input UserCreateWithoutMomentInput {
   apiSecret: String
   passPhrase: String
   subscribeCost: String
-  totalProperty: String
-  totalEarnRate: String
-  totalEarnValue: String
+  totalProperty: Float
+  totalEarnRate: Float
+  totalEarnValue: Float
   setting: SettingCreateOneInput
 }
 
@@ -1921,9 +1921,9 @@ type UserPreviousValues {
   apiSecret: String
   passPhrase: String
   subscribeCost: String
-  totalProperty: String
-  totalEarnRate: String
-  totalEarnValue: String
+  totalProperty: Float
+  totalEarnRate: Float
+  totalEarnValue: Float
 }
 
 type UserSubscriptionPayload {
@@ -1954,9 +1954,9 @@ input UserUpdateInput {
   apiSecret: String
   passPhrase: String
   subscribeCost: String
-  totalProperty: String
-  totalEarnRate: String
-  totalEarnValue: String
+  totalProperty: Float
+  totalEarnRate: Float
+  totalEarnValue: Float
   setting: SettingUpdateOneInput
 }
 
@@ -1969,9 +1969,9 @@ input UserUpdateManyMutationInput {
   apiSecret: String
   passPhrase: String
   subscribeCost: String
-  totalProperty: String
-  totalEarnRate: String
-  totalEarnValue: String
+  totalProperty: Float
+  totalEarnRate: Float
+  totalEarnValue: Float
 }
 
 input UserWhereInput {
@@ -2110,48 +2110,30 @@ input UserWhereInput {
   subscribeCost_not_starts_with: String
   subscribeCost_ends_with: String
   subscribeCost_not_ends_with: String
-  totalProperty: String
-  totalProperty_not: String
-  totalProperty_in: [String!]
-  totalProperty_not_in: [String!]
-  totalProperty_lt: String
-  totalProperty_lte: String
-  totalProperty_gt: String
-  totalProperty_gte: String
-  totalProperty_contains: String
-  totalProperty_not_contains: String
-  totalProperty_starts_with: String
-  totalProperty_not_starts_with: String
-  totalProperty_ends_with: String
-  totalProperty_not_ends_with: String
-  totalEarnRate: String
-  totalEarnRate_not: String
-  totalEarnRate_in: [String!]
-  totalEarnRate_not_in: [String!]
-  totalEarnRate_lt: String
-  totalEarnRate_lte: String
-  totalEarnRate_gt: String
-  totalEarnRate_gte: String
-  totalEarnRate_contains: String
-  totalEarnRate_not_contains: String
-  totalEarnRate_starts_with: String
-  totalEarnRate_not_starts_with: String
-  totalEarnRate_ends_with: String
-  totalEarnRate_not_ends_with: String
-  totalEarnValue: String
-  totalEarnValue_not: String
-  totalEarnValue_in: [String!]
-  totalEarnValue_not_in: [String!]
-  totalEarnValue_lt: String
-  totalEarnValue_lte: String
-  totalEarnValue_gt: String
-  totalEarnValue_gte: String
-  totalEarnValue_contains: String
-  totalEarnValue_not_contains: String
-  totalEarnValue_starts_with: String
-  totalEarnValue_not_starts_with: String
-  totalEarnValue_ends_with: String
-  totalEarnValue_not_ends_with: String
+  totalProperty: Float
+  totalProperty_not: Float
+  totalProperty_in: [Float!]
+  totalProperty_not_in: [Float!]
+  totalProperty_lt: Float
+  totalProperty_lte: Float
+  totalProperty_gt: Float
+  totalProperty_gte: Float
+  totalEarnRate: Float
+  totalEarnRate_not: Float
+  totalEarnRate_in: [Float!]
+  totalEarnRate_not_in: [Float!]
+  totalEarnRate_lt: Float
+  totalEarnRate_lte: Float
+  totalEarnRate_gt: Float
+  totalEarnRate_gte: Float
+  totalEarnValue: Float
+  totalEarnValue_not: Float
+  totalEarnValue_in: [Float!]
+  totalEarnValue_not_in: [Float!]
+  totalEarnValue_lt: Float
+  totalEarnValue_lte: Float
+  totalEarnValue_gt: Float
+  totalEarnValue_gte: Float
   setting: SettingWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
