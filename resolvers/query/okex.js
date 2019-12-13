@@ -27,12 +27,14 @@ const okex = {
                     'OK-ACCESS-TIMESTAMP': timestamp,
                     'OK-ACCESS-PASSPHRASE': user.passPhrase
                 };
+                console.log("begin request")
                 let body2 = await rp( apiUri+'/api/account/v3/wallet', {url:apiUri+'/api/account/v3/wallet', method: 'GET', headers: requestHeader});
+                console.log("result is " + body2)
                 let CNYRate = await ctx.prisma.rate({
                     key:"USDT-CNY"
                 });
                 let respJson = JSON.parse(body2);
-      /*          respJson.forEach(function (v, i) {
+                /*respJson.forEach(function (v, i) {
                     let instrument = v.currency+'-USDT';
                     let rate;
                     rate = ctx.prisma.rate({
