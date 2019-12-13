@@ -67,6 +67,10 @@ var models = [
   {
     name: "Closeout",
     embedded: false
+  },
+  {
+    name: "UsdtMessage",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

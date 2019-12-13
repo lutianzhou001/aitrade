@@ -3,7 +3,6 @@ const {getUserId} = require('../../utills/utils');
 const users = {
     async me(parent, args, ctx, info) {
         try {
-            console.log('hand');
             const userId = getUserId(ctx);
             const me = await ctx.prisma.user({
                 id: userId
@@ -255,12 +254,12 @@ const users = {
             }
             let attentionCount = ctx.prisma.followsConnection({
                 where: {
-                    leader: userId
+                    follower: userId
                 }
             }).aggregate().count();
             let followerCount = ctx.prisma.followsConnection({
                 where: {
-                    follower: userId
+                    leader: userId
                 }
             }).aggregate().count();
             let subscribeCount = ctx.prisma.subscribesConnection({

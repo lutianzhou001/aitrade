@@ -22,11 +22,12 @@ type Query {
   getContractInfo(UID: String!): getContractInfoPayload
 
   getCloseout(skip: Int, first: Int): [getCloseoutPayload]
+  getUsdtMessage: getUsdtMessagePayload
   getMycoin: [getMycoinPayload]
   getBattle: getBattlePayload
   getOnchainexchange: getOnchainexchangePayload
   getBtcplaceorder: getBtcplaceorderPayload
-  getDistribution: [getDistributionPayload]
+  getDistribution: getDistributionPayload
   getCloseoutSummary: [getCloseoutSummaryPayload]
 }
 
@@ -48,6 +49,11 @@ type Mutation {
   createMoment(title:String, content:String): createMomentPayload
 }
 
+type getUsdtMessagePayload {
+  price: Float
+  exchangeRate: Float
+  premium: Float
+}
 
 type getMycoinPayload {
   coin_name: String
@@ -61,6 +67,12 @@ type getCloseoutSummaryPayload {
 }
 
 type getDistributionPayload {
+  arrangeData: [arrangeData]
+  ups: Int
+  downs: Int
+}
+
+type arrangeData {
   arrange: Int
   count: Int
 }

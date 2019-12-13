@@ -113,3 +113,8 @@ type Closeout {
 	to: String!
 	price: Float!
 }
+
+type UsdtMessage {
+	price: Float
+	exchangeRate: Float
+}

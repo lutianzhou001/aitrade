@@ -10,6 +10,7 @@ const bigdata = {
             last: 1
         })
         var res = {}
+        console.log(battles)
         if (battles){
             res['longOKex'] = battles[0].longOKex
             res['shortOKex'] = battles[0].shortOKex
@@ -23,9 +24,7 @@ const bigdata = {
     
     // ok
     async getMycoin (parent, args, ctx, info) {
-        const myCoins = await ctx.prisma.Mycoins({
-            last: 1
-        })
+        const myCoins = await ctx.prisma.mycoins()
         var res = []
         if (myCoins) {
             for (i=0; i<myCoins.length; i++) {
@@ -52,31 +51,55 @@ const bigdata = {
     },
 
     async getBtcplaceorder (parent, args, ctx, info) {
-        const Btcplaceorders = await ctx.prisma.btcPlaceOrders({
+        const btcplaceorders = await ctx.prisma.btcPlaceOrders({
             last: 1
         })
         var res = {}
-        if (Btcplaceorders) {
-            res['long'] = Btcplaceorders[0].long
-            res['longDeal'] = Btcplaceorders[0].longDeal
-            res['longDealAmount'] = Btcplaceorders[0].longDealAmount
-            res['short'] = Btcplaceorders[0].short
-            res['shortDeal'] = Btcplaceorders[0].shortDeal
-            res['shortDealAmount'] = Btcplaceorders[0].shortDealAmount
+        if (btcplaceorders) {
+            res['long'] = btcplaceorders[0].long
+            res['longDeal'] = btcplaceorders[0].longDeal
+            res['longDealAmount'] = btcplaceorders[0].longDealAmount
+            res['short'] = btcplaceorders[0].short
+            res['shortDeal'] = btcplaceorders[0].shortDeal
+            res['shortDealAmount'] = btcplaceorders[0].shortDealAmount
         } 
         return res
     },
 
     async getDistribution (parent, args, ctx, info) {
-        const Distributions = await ctx.prisma.distributions()
-        var res = []
-        if (Distributions) {
-            for ( i=0; i<Distributions.length; i++){
+        const distributions = await ctx.prisma.distributions()
+        var res = {}
+        var arrange = []
+        var ups = 0 
+        var downs = 0
+        console.log(distributions)
+        if (distributions) {
+            for ( i=0; i< distributions.length; i++){
                 var obj = {}
-                obj['arrange'] = Distributions[i].arrange
-                obj['count'] = Distributions[i].count
-                res.push(obj)
+                obj['arrange'] = distributions[i].arrange
+                obj['count'] = distributions[i].count
+                if (distributions[i].arrange < 0){
+                    ups = ups + obj['count']
+                } else {
+                    downs = downs + obj['count']
+                }
+                arrange.push(obj)
             }
+            res['arrangeData'] = arrange
+            res['ups'] = ups
+            res['downs'] = downs
+        }
+        console.log(res)
+        return res
+    },
+
+    async getUsdtMessage (parent, args, ctx, info) {
+        const usdtMessage = await ctx.prisma.usdtMessages()
+        var res = {}
+        if (usdtMessage) {
+            res['price'] = usdtMessage[0].price
+            res['exchangeRate'] = usdtMessage[0].exchangeRate
+            res['premium'] = (res['exchangeRate'] / res['price'] * 100).toFixed(2)
         }
         return res
     },
