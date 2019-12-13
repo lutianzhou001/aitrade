@@ -70,6 +70,9 @@ const users = {
                 throw new Error("验证令牌已过期")
             }
             const users = await ctx.prisma.users({
+                where: {
+                    id_not: userId
+                },
                 orderBy: "createdAt_DESC",
                 skip: args.skip,
                 first: args.first
@@ -250,7 +253,7 @@ const users = {
             if (!userId) {
                 throw new Error("验证令牌已过期")
             }
-            let subscribeCount = ctx.prisma.followsConnection({
+            let attentionCount = ctx.prisma.followsConnection({
                 where: {
                     leader: userId
                 }
@@ -260,7 +263,7 @@ const users = {
                     follower: userId
                 }
             }).aggregate().count();
-            let attentionCount = ctx.prisma.subscribesConnection({
+            let subscribeCount = ctx.prisma.subscribesConnection({
                 where: {
                     follower: userId
                 }
