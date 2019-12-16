@@ -21,8 +21,10 @@
     "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
+    "node-ctx": "^1.2.0",
     "prisma-client-lib": "^1.34.10",
     "request": "^2.88.0",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "unirest": "^0.6.0"
   }
 }

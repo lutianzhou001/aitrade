@@ -112,6 +112,7 @@ type Closeout {
 	from: String!
 	to: String!
 	price: Float!
+        created_At: String!
 }
 
 type UsdtMessage {

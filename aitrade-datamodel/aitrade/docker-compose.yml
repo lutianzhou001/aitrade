@@ -21,7 +21,7 @@ services:
             migrations: true
             connectionLimit: 5
   mysql:
-    image: mysql:5.7r
+    image: mysql:5.7
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: prisma
