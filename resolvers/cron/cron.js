@@ -59,7 +59,23 @@ async function usdtMessage(){
    });
 }
 
-
+async function getCloseout(){
+  let options = {
+      method = "GET",
+      uri = apiUri + '/api/swap/v3/instruments/BTC-USD-SWAP/liquidation?status=1&limit=50'
+  }
+  let rqbody = JSON.parse(await rp(options))
+  for (i=0; i< rqbody.length; i++){
+  await prisma.prisma.createClouseout({
+      instument_id: rqbody[i].instrment_id,
+      size: parseInt(rqbody[i].size),
+      created_at: rqbody[i].created_at,
+      loss: parseFloat(rqbody[i].loss),
+      price: parseFloat(rqbody[i].price),
+      type: parseInt(rqbody[i].type)
+    })
+  }
+}
 
 prices()
 usdtMessage()

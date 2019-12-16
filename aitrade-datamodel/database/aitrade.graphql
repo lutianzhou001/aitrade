@@ -107,12 +107,11 @@ type Onchain {
 type Closeout {
 	exchange: String!
 	instrument_id: String!
-	status: String!
-	limit: String!
-	from: String!
-	to: String!
+	size: Int!
+	created_at: String!
+	loss: Float!
 	price: Float!
-        created_At: String!
+	type: Int!
 }
 
 type UsdtMessage {
