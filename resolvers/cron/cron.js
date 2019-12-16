@@ -32,7 +32,7 @@ async function prices() {
     let createMycoinETH = await prisma.prisma.createMycoin({
 	coin_name: "ETH",
 	coin_price: parseFloat(JSON.parse(rqbodyETH).last)
-    })   
+    })
 }
 
 async function usdtMessage(){
@@ -61,8 +61,8 @@ async function usdtMessage(){
 
 async function getCloseout(){
   let options = {
-      method = "GET",
-      uri = apiUri + '/api/swap/v3/instruments/BTC-USD-SWAP/liquidation?status=1&limit=50'
+      method: "GET",
+      uri: apiUri + '/api/swap/v3/instruments/BTC-USD-SWAP/liquidation?status=1&limit=50'
   }
   let rqbody = JSON.parse(await rp(options))
   for (i=0; i< rqbody.length; i++){
