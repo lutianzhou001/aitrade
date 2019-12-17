@@ -24,7 +24,9 @@ const bigdata = {
     
     // ok
     async getMycoin (parent, args, ctx, info) {
-        const myCoins = await ctx.prisma.mycoins()
+        const myCoins = await ctx.prisma.mycoins({
+	    last: 2
+	})
         var res = []
         if (myCoins) {
             for (i=0; i<myCoins.length; i++) {
@@ -67,7 +69,9 @@ const bigdata = {
     },
 
     async getDistribution (parent, args, ctx, info) {
-        const distributions = await ctx.prisma.distributions()
+        const distributions = await ctx.prisma.distributions({
+	    last: 12
+	})
         var res = {}
         var arrange = []
         var ups = 0 

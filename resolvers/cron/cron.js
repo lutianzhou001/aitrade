@@ -65,7 +65,6 @@ async function closeout(){
       uri: apiUri + '/api/swap/v3/instruments/BTC-USD-SWAP/liquidation?status=1&limit=50'
   }
   let rqbody = JSON.parse(await rp(options))
-  console.log(rqbody[0].size)
   for (i=0; i< rqbody.length; i++){
   await prisma.prisma.createCloseout({
       exchange: "OKex",
@@ -79,9 +78,104 @@ async function closeout(){
   }
 }
 
+async function distribution(){
+  let downs11 = 0
+  let downs9 = 0
+  let downs7 = 0
+  let downs5 = 0
+  let downs3 = 0
+  let downs1 = 0
+  let ups1 = 0
+  let ups3 = 0
+  let ups5 = 0
+  let ups7 = 0
+  let ups9 = 0
+  let ups11 = 0
+  let options = {
+      method : "GET",
+      uri : "https://dncapi.bqiapp.com/api/coin/web-coinrank?page=1&type=-1&pagesize=200&webp=1"
+  }
+  let rqbody = JSON.parse(await rp(options))
+  for ( i=0; i<rqbody.data.length; i++){
+    if (rqbody.data[i].change_percent <= - 10){
+         downs11 = downs11 + 1
+    } else if (rqbody.data[i].change_percent > - 10 && rqbody.data[i].change_percent <= -8){
+         downs9 = downs9 + 1
+    } else if (rqbody.data[i].change_percent > -8 && rqbody.data[i].change_percent <= -6){
+         downs7 = downs7 + 1
+    } else if (rqbody.data[i].change_percent > - 6 && rqbody.data[i].change_percent <= -4){
+         downs5 = downs5 + 1
+    } else if (rqbody.data[i].change_percent > - 4 && rqbody.data[i].change_percent <= -2){
+         downs3 = downs3 + 1
+    } else if (rqbody.data[i].change_percent > - 2 && rqbody.data[i].change_percent <= 0){
+         downs1 = downs1 + 1
+    } else if (rqbody.data[i].change_percent > 0 && rqbody.data[i].change_percent <= 2){
+         ups1 = ups1 + 1
+    } else if (rqbody.data[i].change_percent > 2 && rqbody.data[i].change_percent <= 4){
+         ups3 = ups3 + 1
+    } else if (rqbody.data[i].change_percent > 4 && rqbody.data[i].change_percent <= 6){
+         ups5 = ups5 + 1
+    } else if (rqbody.data[i].change_percent > 6 && rqbody.data[i].change_percent <= 8){
+         ups7 = ups7 + 1
+    } else if (rqbody.data[i].change_percent > 8 && rqbody.data[i].change_percent <= 10){
+         ups9 = ups9 + 1
+    } else if (rqbody.data[i].change_percent > 10){
+         ups11 = ups11 + 1
+    }
+  }
+    let insertCreatedowns11 = await prisma.prisma.createDistribution({
+		arrange: -11,
+		count: downs11
+    })
+    let insertCreatedowns9 = await prisma.prisma.createDistribution({
+		arrange: -9,
+		count: downs9
+    })
+    let insertCreatedowns7 = await prisma.prisma.createDistribution({
+		arrange: -7,
+		count: downs7
+    })
+    let insertCreatedowns5 = await prisma.prisma.createDistribution({
+		arrange: -5,
+		count: downs5
+    })
+    let insertCreatedowns3 = await prisma.prisma.createDistribution({
+		arrange: -3,
+		count: downs3
+    })
+    let insertCreatedowns1 = await prisma.prisma.createDistribution({
+		arrange: -1,
+		count: downs1
+    })
+    let insertCreateups1 = await prisma.prisma.createDistribution({
+		arrange: 1,
+		count: ups1
+    })
+    let insertCreateups3 = await prisma.prisma.createDistribution({
+		arrange: 3,
+		count: ups3
+    })
+    let insertCreateups5 = await prisma.prisma.createDistribution({
+		arrange: 5,
+		count: ups5
+    })
+    let insertCreateups7 = await prisma.prisma.createDistribution({
+		arrange: 7,
+		count: ups7
+    })
+    let insertCreateups9 = await prisma.prisma.createDistribution({
+		arrange: 9,
+		count: ups9
+    })
+    let insertCreateups11 = await prisma.prisma.createDistribution({
+		arrange: 11,
+		count: ups11
+    })
+}
 prices()
 usdtMessage()
 closeout()
+distribution()
 
 module.exports = { prices }
 
