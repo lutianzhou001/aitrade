@@ -98,9 +98,11 @@ const bigdata = {
     },
 
     async getUsdtMessage (parent, args, ctx, info) {
-        const usdtMessage = await ctx.prisma.usdtMessages()
+        const usdtMessage = await ctx.prisma.usdtMessages({
+		last: 1
+	})
         var res = {}
-        if (usdtMessage) {
+	if (usdtMessage) {
             res['price'] = usdtMessage[0].price
             res['exchangeRate'] = usdtMessage[0].exchangeRate
             res['premium'] = (res['exchangeRate'] / res['price'] * 100).toFixed(2)
